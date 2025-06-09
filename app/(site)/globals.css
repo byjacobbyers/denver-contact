@@ -36,8 +36,8 @@
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #e4d9bc;
   --sidebar-ring: #b45309;
-  --font-sans: Outfit, sans-serif;
-  --font-serif: Merriweather, serif;
+  --font-sans: Sora, sans-serif;
+  --font-serif: Zilla Slab, serif;
   --font-mono: Space Mono, monospace;
   --radius: 0.3rem;
   --shadow-2xs: 0px 2px 3px 0px hsl(28 18% 25% / 0.09);
@@ -83,8 +83,8 @@
   --sidebar-accent-foreground: #0c2a4d;
   --sidebar-border: #44403c;
   --sidebar-ring: #f97316;
-  --font-sans: Outfit, sans-serif;
-  --font-serif: Merriweather, serif;
+  --font-sans: Sora, sans-serif;
+  --font-serif: Zilla Slab, serif;
   --font-mono: Space Mono, monospace;
   --radius: 0.3rem;
   --shadow-2xs: 0px 2px 3px 0px hsl(0 0% 5% / 0.09);

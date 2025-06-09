@@ -28,7 +28,6 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn(
-      "dark",
       sans.variable,
       mono.variable,
       serif.variable
