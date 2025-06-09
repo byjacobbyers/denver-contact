@@ -14,8 +14,8 @@ import { AppProvider } from '@/context/app';
 // import { CookieConsentBanner } from '@/components/cookie-consent';
 
 export const metadata: Metadata = {
-  title: "Unison Crew",
-  description: "A collaborative, heart-led festival crew rooted in connection, care, and creativity. We're a constellation of dancers, dreamers, and community builders preparing for Unison Festival to co-create a shared camp, support each other, and turn our gathering into a soulful village. ✨",
+  title: "Denver Contact Improv",
+  description: "Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.",
   openGraph: {
     images: ['https://cdn.sanity.io/images/lwfykyvn/production/a0f37e1b9a9505df8c3acadb8f09fe35520a4d0f-1026x514.jpg'],
   },

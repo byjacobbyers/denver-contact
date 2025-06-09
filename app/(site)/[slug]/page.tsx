@@ -36,9 +36,7 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: {
-    slug: string
-  }
+  params: any
 }
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
@@ -63,8 +61,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
     const result = {
       noIndex: pageSeo?.noIndex ?? false,
-      title: pageSeo?.metaTitle || globalSeo?.metaTitle || 'Unison Crew',
-      description: pageSeo?.metaDesc || globalSeo?.metaDesc || 'A collaborative, heart-led festival crew',
+      title: pageSeo?.metaTitle || globalSeo?.metaTitle || 'Page',
+      description: pageSeo?.metaDesc || globalSeo?.metaDesc || 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
       image: pageSeo?.shareGraphic?.asset?.url
         ? urlFor(pageSeo.shareGraphic.asset.url).width(1200).height(630).url()
         : `/api/og?id=${page._id}`
@@ -72,7 +70,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
     return {
       generator: 'Next.js',
-      applicationName: 'Unison Crew',
+      applicationName: 'Denver Contact Improv',
       publisher: 'Ohmni LLC',
       robots: {
         index: !result.noIndex,
@@ -88,14 +86,14 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
         },
       },
       metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
-      title: `${result.title} :: Unison Crew`,
+      title: `${result.title} :: Denver Contact Improv`,
       description: result.description,
       openGraph: {
         title: result.title,
         description: result.description,
         url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
-        siteName: 'Unison Crew',
-        authors: ['Jacob Byers'],
+        siteName: 'Denver Contact Improv',
+        authors: ['Michael Bernal', 'Jacob Byers'],
         images: [
           {
             url: result.image,
@@ -119,8 +117,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   } catch (error) {
     console.error('Error generating metadata:', error)
     return {
-      title: 'Unison Crew',
-      description: 'A collaborative, heart-led festival crew',
+      title: 'Denver Contact Improv',
+      description: 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
     }
   }
 }

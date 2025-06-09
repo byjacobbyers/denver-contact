@@ -20,8 +20,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 		if (!global?.[0]?.seo) {
 			return {
-				title: 'Unison Crew',
-				description: 'A collaborative, heart-led festival crew',
+				title: 'Denver Contact Improv',
+				description: 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
 			}
 		}
 
@@ -35,7 +35,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 	return {
 		generator: 'Next.js',
-		applicationName: 'Unison Crew',
+		applicationName: 'Denver Contact Improv',
 		publisher: 'Ohmni LLC',
     robots: {
       index: true,
@@ -57,8 +57,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 				title: result.title,
 			description: result.description,
       url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
-      siteName: 'Unison Crew',
-      authors: ['Jacob Byers'],
+      siteName: 'Denver Contact Improv',
+      authors: ['Michael Bernal', 'Jacob Byers'],
 				images: result.image ? [
 				{
 					url: result.image,
@@ -82,8 +82,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 	} catch (error) {
 		console.error('Error generating metadata:', error)
 		return {
-			title: 'Unison Crew',
-			description: 'A collaborative, heart-led festival crew',
+			title: 'Denver Contact Improv',
+			description: 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
 		}
 	}
 }
