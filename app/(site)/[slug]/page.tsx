@@ -36,7 +36,9 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: any
+  params: {
+    slug: string
+  }
 }
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
