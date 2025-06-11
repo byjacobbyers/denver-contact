@@ -19,6 +19,14 @@ export default defineType({
   ],
   fields: [
     defineField({
+      title: "Image",
+      name: "image",
+      type: "defaultImage",
+      description: "Upload or select an image.",
+      group: 'event',
+      validation: Rule => Rule.required(),
+    }),
+    defineField({
       title: 'Title',
       name: 'title',
       type: 'string',
@@ -42,26 +50,20 @@ export default defineType({
       type: 'datetime',
       group: 'event',
       validation: Rule => Rule.required(),
+      initialValue: () => new Date().toISOString(),
     }),
     defineField({
       title: 'End Date',
       name: 'endDate',
       type: 'datetime',
       group: 'event',
+      initialValue: () => new Date().toISOString(),
     }),
     defineField({
-      title: 'Location',
-      name: 'location',
-      type: 'string',
-      group: 'event',
-    }),
-    defineField(
-      {
         name: 'content',
         type: 'simpleText',
         group: 'event',
-      }
-    ),
+    }),
     defineField({
       title: 'SEO / Share Settings',
       name: 'seo',
