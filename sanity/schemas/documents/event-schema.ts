@@ -45,6 +45,27 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      title: 'Event Type',
+      name: 'eventType',
+      type: 'string',
+      group: 'event',
+      initialValue: 'series',
+      options: {
+        list: [
+          { title: 'Series', value: 'series' },
+          { title: 'Workshop', value: 'workshop' },
+          { title: 'Jam / Practice', value: 'jam' },
+        ],
+        layout: 'radio',
+      },
+    }),
+    defineField({
+      title: 'Location',
+      name: 'location',
+      type: 'string',
+      group: 'event',
+    }),
+    defineField({
       title: 'Start Date',
       name: 'startDate',
       type: 'datetime',
@@ -58,6 +79,27 @@ export default defineType({
       type: 'datetime',
       group: 'event',
       initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      title: 'Pricing Details',
+      name: 'pricing',
+      type: 'simpleText',
+      group: 'event',
+      description: 'Describe early bird, regular, sliding scale, etc.',
+    }),
+    defineField({
+      title: 'Registration Link or Instructions',
+      name: 'registration',
+      type: 'string',
+      group: 'event',
+      description: 'URL or note (e.g. “Venmo @username with note”)',
+    }),
+    defineField({
+      title: 'Guest Teachers',
+      name: 'guestTeachers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      group: 'event',
     }),
     defineField({
         name: 'content',

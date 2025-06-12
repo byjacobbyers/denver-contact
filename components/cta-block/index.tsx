@@ -17,40 +17,32 @@ const CtaBlock: React.FC<CtaBlockType> = ({
   componentIndex,
   anchor,
   content,
-  cta
+  cta,
+  alignment = 'text-center',
 }) => {
+  if (!active) return null
 
-
-
-  if (active) {
-    return (
-      <section
-        id={`${anchor ? anchor : 'cta-block-' + componentIndex}`}
-       className="cta-block w-full flex justify-center px-5"
-      >
-        <motion.div 
-          className='container flex flex-col justify-center items-center text-center'
-          initial={{ 
-            opacity: 0,
-            scale: 0.95
-          }}
-          whileInView={{ 
-            opacity: 1,
-            scale: 1
-          }}
-          viewport={{ once: true }} 
-          transition={{ 
+  return (
+    <section
+      id={`${anchor ? anchor : "cta-block-" + componentIndex}`}
+      className="cta-block w-full flex justify-center px-5"
+    >
+      <div className={`container flex flex-col ${alignment === 'text-left' ? 'items-start' : alignment === 'text-right' ? 'items-end' : 'items-center'} justify-center py-16 lg:py-24`}>
+        <motion.div
+          className={`w-full max-w-4xl ${alignment}`}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{
             delay: componentIndex !== 0 ? 0.5 : 0,
-            type: 'spring',
-            duration: 1.5
+            type: "spring",
+            duration: 1.5,
           }}
         >
-          {content && (
-            <SimpleText content={content} />
-          )}
+          {content && <SimpleText content={content} />}
           {cta && cta.active && (
             <motion.div 
-              className='flex justify-center md:justify-start'
+              className={`flex ${alignment === 'text-left' ? 'justify-start' : alignment === 'text-right' ? 'justify-end' : 'justify-center'}`}
               initial={{ 
                 opacity: 0,
                 scale: 0.95
@@ -66,7 +58,7 @@ const CtaBlock: React.FC<CtaBlockType> = ({
                 duration: 1.5
               }}
             >
-              <Route data={cta.route} className='flex'>
+              <Route data={cta.route}>
                 <motion.div
                   initial={{ 
                     scale: 1
@@ -81,7 +73,7 @@ const CtaBlock: React.FC<CtaBlockType> = ({
                     type: 'spring',
                     duration: 0.5
                   }}
-                  className='flex w-full mt-5'
+                  className=' mt-5'
                 >
                   <Button>
                     {cta?.route?.title ? cta?.route?.title : 'Learn More'}
@@ -91,11 +83,9 @@ const CtaBlock: React.FC<CtaBlockType> = ({
             </motion.div>
           )}
         </motion.div>
-      </section>
-    )
-  }
-
-  return null
+      </div>
+    </section>
+  )
 }
 
 export default CtaBlock

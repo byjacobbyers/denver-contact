@@ -7,4 +7,5 @@ export type CtaBlockType = {
 	anchor?: string
 	content?: SimpleTextType
 	cta?: CtaType
+	alignment?: 'text-left' | 'text-center' | 'text-right'
 }

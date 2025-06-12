@@ -1,10 +1,10 @@
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
-import { UsersIcon } from '@sanity/icons'
+import { StarFilledIcon } from '@sanity/icons'
 
 const Review = (S, context) => {
 	return S.listItem()
 		.title('Reviews')
-		.icon(UsersIcon)
+		.icon(StarFilledIcon)
 		.child(
 			S.list()
 				.title('Reviews')
@@ -13,7 +13,7 @@ const Review = (S, context) => {
 						id: 'review',
 						title: 'Reviews',
 						schemaType: 'review',
-						icon: UsersIcon,
+						icon: StarFilledIcon,
 						child: () =>
 							S.documentTypeList('review')
 								.title('Reviews')
@@ -23,7 +23,7 @@ const Review = (S, context) => {
 					orderableDocumentListDeskItem({
 						type: 'review',
 						title: 'Order Reviews',
-						icon: UsersIcon,
+						icon: StarFilledIcon,
 						id: 'review-order',
 						createIntent: false,
 						menuItems: [],

@@ -8,6 +8,8 @@ import page from './documents/page-schema'
 import site from './documents/site-schema'
 import navigation from './documents/navigation-schema'
 import review from './documents/review-schema'
+import person from './documents/person-schema'
+import event from './documents/event-schema'
 
 // components
 import sections from './components/page-builder-schema'
@@ -42,6 +44,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     site,
     navigation,
     review,
+    person,
+    event,
 
     // components
     sections,

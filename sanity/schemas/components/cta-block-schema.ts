@@ -23,6 +23,19 @@ const ctaBlock = defineType({
         description: "The anchor for the section. No hash symbols. Optional.",
       }
     ),
+    defineField({
+      title: 'Alignment',
+      name: 'alignment',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Left', value: 'text-left' },
+          { title: 'Center', value: 'text-center' },
+          { title: 'Right', value: 'text-right' },
+        ],
+      },
+      initialValue: 'text-center',
+    }),
     defineField(
       {
         name: 'content',

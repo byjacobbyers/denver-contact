@@ -9,6 +9,7 @@ import { ImageBlockType } from "@/types/components/image-block-type"
 // Components
 import SimpleText from "@/components/simple-text"
 import SanityImage from "@/components/sanity-image"
+import { useHeaderHeight } from '@/contexts/header-context'
 
 const ImageBlock: React.FC<ImageBlockType> = ({
   active,
@@ -18,6 +19,10 @@ const ImageBlock: React.FC<ImageBlockType> = ({
   fullScreen,
   content,
 }) => {
+  const { headerHeight } = useHeaderHeight()
+
+  console.log(headerHeight)
+  
   if (!active) return null
 
   return (
@@ -27,11 +32,14 @@ const ImageBlock: React.FC<ImageBlockType> = ({
     >
       {fullScreen ? (
         // Full-Screen Layout
-        <div className="relative w-full lg:h-[calc(100vh-178px)] overflow-hidden">
+        <div 
+          className="relative w-full overflow-hidden"
+          style={{ height: `calc(100vh - ${headerHeight}px)` }}
+        >
           {/* Desktop Overlay */}
-          <div className="hidden lg:flex absolute inset-0 z-10 bg-black bg-opacity-50 items-center justify-center">
+          <div className="hidden lg:flex absolute inset-0 bg-black/50 z-10 items-center justify-center">
             <motion.div
-              className="text-white text-center w-full max-w-4xl px-5"
+              className="text-white text-center w-full max-w-4xl px-5 [text-shadow:_0_1px_2px_rgb(0_0_0_/_40%)]"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}

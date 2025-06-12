@@ -15,7 +15,7 @@ export default function Page({ page }: { page: SanityDocument }) {
   const { sections } = page
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-y-24 py-12 lg:py-24">
+    <main className="flex min-h-screen flex-col items-center gap-y-24 pb-12 lg:pb-24">
       <Sections body={sections} />
     </main>
   )
