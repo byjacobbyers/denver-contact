@@ -19,7 +19,7 @@ export default defineType({
   ],
   fields: [
     defineField({
-      title: "Image",
+      title: "Event Image (Not Flyer)",
       name: "image",
       type: "defaultImage",
       description: "Upload or select an image.",
@@ -68,7 +68,7 @@ export default defineType({
     defineField({
       title: 'Start Date',
       name: 'startDate',
-      type: 'datetime',
+      type: 'date',
       group: 'event',
       validation: Rule => Rule.required(),
       initialValue: () => new Date().toISOString(),
@@ -76,7 +76,7 @@ export default defineType({
     defineField({
       title: 'End Date',
       name: 'endDate',
-      type: 'datetime',
+      type: 'date',
       group: 'event',
       initialValue: () => new Date().toISOString(),
     }),
@@ -111,9 +111,9 @@ export default defineType({
       }
     }),
     defineField({
-      title: 'Description',
-      name: 'description',
-      type: 'text',
+      title: 'Page Content',
+      name: 'content',
+      type: 'simpleText',
       group: 'event',
     }),
     defineField({
