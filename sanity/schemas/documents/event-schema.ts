@@ -92,7 +92,7 @@ export default defineType({
       name: 'registration',
       type: 'string',
       group: 'event',
-      description: 'URL or note (e.g. “Venmo @username with note”)',
+      description: 'URL or note (e.g. "Venmo @username with note")',
     }),
     defineField({
       title: 'Guest Teachers',
@@ -102,9 +102,19 @@ export default defineType({
       group: 'event',
     }),
     defineField({
-        name: 'content',
-        type: 'simpleText',
-        group: 'event',
+      title: 'Event Flyer',
+      name: 'flyer',
+      type: 'file',
+      group: 'event',
+      options: {
+        accept: '.pdf,.jpg,.jpeg,.png'
+      }
+    }),
+    defineField({
+      title: 'Description',
+      name: 'description',
+      type: 'text',
+      group: 'event',
     }),
     defineField({
       title: 'SEO / Share Settings',

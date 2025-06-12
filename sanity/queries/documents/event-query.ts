@@ -10,6 +10,10 @@ export const eventQuery = groq`
     endDate,
     location,
     description,
+    "flyer": flyer.asset->{
+      url,
+      originalFilename
+    },
     "guestTeachers": guestTeachers[]-> {
       _id,
       _type,
