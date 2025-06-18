@@ -67,29 +67,28 @@ const EventCarousel = () => {
           align: "start",
           loop: true,
         }}
-        className="w-full"
       >
-        <CarouselContent>
+        <CarouselContent className={`${events.length > 3 ? 'w-full' : 'w-full flex justify-center'}`}>
           {events.map((event) => (
             <CarouselItem key={event._id} className="md:basis-1/2 lg:basis-1/3">
               <Link href={`/events/${event.slug.current}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-200">
                   <CardHeader className="p-0">
                     {event.image && (
-                      <div className="aspect-[16/9] w-full overflow-hidden">
+                      <div className="aspect-[16/9] w-full overflow-hidden rounded-t-xl">
                         <SanityImage
                           source={event.image}
                           alt={event.title}
                           width={800}
                           height={450}
                           className="w-full h-full object-cover"
-                        />
+                        />  
                       </div>
                     )}
                   </CardHeader>
-                  <CardContent className="p-4">
+                  <CardContent className="px-4">
                     <div className="flex flex-col gap-2">
-                      <Badge variant="outline" className="w-fit">
+                      <Badge variant="default" className="w-fit mb-2">
                         {event.eventType}
                       </Badge>
                       <h3 className="text-xl font-semibold line-clamp-2">

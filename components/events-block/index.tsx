@@ -29,9 +29,9 @@ const EventsBlock: React.FC<EventsBlockType> = ({
         id={`${anchor ? anchor : 'events-block-' + componentIndex}`}
         className="w-full flex flex-col items-center px-5 py-16 lg:py-24 bg-accent"
       >
-        <div className="container flex flex-col lg:flex-row gap-y-10 2xl:gap-y-16">
+        <div className="container flex flex-col gap-y-10 2xl:gap-y-16">
           <motion.div
-            className="w-1/3 relative flex"
+            className="w-full relative flex"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -47,7 +47,7 @@ const EventsBlock: React.FC<EventsBlockType> = ({
           </motion.div>
 
           <motion.div
-            className="w-2/3 relative flex justify-center"
+            className="w-full relative flex justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
