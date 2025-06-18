@@ -2,7 +2,7 @@
 
 // Tools
 import { motion } from "framer-motion"
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 // Types
 import { EventType } from "@/types/documents/event-type"
@@ -10,9 +10,10 @@ import { EventType } from "@/types/documents/event-type"
 // Components
 import SanityImage from "@/components/sanity-image"
 import NormalText from "@/components/normal-text"
+import Sections from "@/components/sections"
 
 export default function EventSingle({ event }: { event: EventType }) {
-  const { title, image, startDate, endDate, location, content } = event
+  const { title, image, startDate, endDate, location, sections } = event
 
   return (
     <article className="flex min-h-screen flex-col items-center gap-y-24 pb-12 lg:pb-24">
@@ -44,8 +45,8 @@ export default function EventSingle({ event }: { event: EventType }) {
             <div>
               {startDate && (
                 <p>
-                  {format(new Date(startDate), 'MMMM d, yyyy')}
-                  {endDate && ` - ${format(new Date(endDate), 'MMMM d, yyyy')}`}
+                  {format(parseISO(startDate), 'MMMM d, yyyy')}
+                  {endDate && ` - ${format(parseISO(endDate), 'MMMM d, yyyy')}`}
                 </p>
               )}
             </div>
@@ -55,18 +56,7 @@ export default function EventSingle({ event }: { event: EventType }) {
       </section>
 
       {/* Content Section */}
-      {content && (
-        <section className="container">
-          <motion.div
-            className="w-full max-w-4xl mx-auto flex flex-col gap-y-5"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <NormalText content={content} />
-          </motion.div>
-        </section>
-      )}
+      <Sections body={sections} />
     </article>
   )
 }

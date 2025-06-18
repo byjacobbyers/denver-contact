@@ -28,11 +28,11 @@ const TextBlock: React.FC<TextBlockType> = ({
     const sanitizedAlignment = sanitizeContentAlignment(contentAlignment)
 
     if (sanitizedAlignment === 'left') {
-      setAlignmentStyles({ justifyContent: 'flex-start', textAlign: 'left' })
+      setAlignmentStyles({ textAlign: 'left' })
     } else if (sanitizedAlignment === 'center') {
-      setAlignmentStyles({ justifyContent: 'center', textAlign: 'center' })
+      setAlignmentStyles({ textAlign: 'center' })
     } else if (sanitizedAlignment === 'right') {
-      setAlignmentStyles({ justifyContent: 'flex-end', textAlign: 'right' })
+      setAlignmentStyles({ textAlign: 'right' })
     }
   }, [contentAlignment])
 
@@ -40,7 +40,7 @@ const TextBlock: React.FC<TextBlockType> = ({
     return (
       <section
         id={`${anchor ? anchor : 'text-block-' + componentIndex}`}
-        className={`w-full flex flex-col items-center`}
+        className={`flex flex-col items-center`}
       >
         {content && (
           <motion.div 

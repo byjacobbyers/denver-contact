@@ -39,7 +39,7 @@ const HeroBlock: React.FC<HeroBlockType> = ({
       >
         <div className={`container flex flex-wrap md:flex-nowrap ${layoutClass} flex-col-reverse  items-center w-full gap-y-5 gap-x-24`}>
           <motion.div 
-            className="w-full md:w-2/3"
+            className="w-full md:w-1/2"
             initial={{ 
               opacity: 0,
               scale: 0.95
@@ -100,7 +100,7 @@ const HeroBlock: React.FC<HeroBlockType> = ({
             )}
           </motion.div>
           <motion.div 
-            className="w-full aspect-lottie md:w-1/3"
+            className="w-full aspect-lottie md:w-1/2"
             initial={{ 
               opacity: 0,
               scale: 0.95

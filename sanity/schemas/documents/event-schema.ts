@@ -111,10 +111,11 @@ export default defineType({
       }
     }),
     defineField({
-      title: 'Page Content',
-      name: 'content',
-      type: 'simpleText',
+      name: 'sections',
+      type: 'sections',
       group: 'event',
+      title: 'Page sections',
+      description: 'Add, edit, and reorder sections',
     }),
     defineField({
       title: 'SEO / Share Settings',

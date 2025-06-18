@@ -1,5 +1,5 @@
 import { PersonType } from './person-type'
-import { NormalTextType } from '../objects/normal-text-type'
+import { PageBuilderType } from '../components/page-builder-type'
 import { DefaultImageType } from "../objects/default-img-type";
 
 export interface EventType {
@@ -14,9 +14,7 @@ export interface EventType {
   endDate?: string
   eventType?: string
   location?: string
-  content?: {
-		text: NormalTextType
-	}
+  sections: any
   guestTeachers?: PersonType[]
   flyer?: {
     asset: {
