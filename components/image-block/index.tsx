@@ -36,12 +36,12 @@ const ImageBlock: React.FC<ImageBlockType> = ({
   return (
     <section
       id={`${anchor ? anchor : "image-block-" + componentIndex}`}
-      className={`image-block w-full flex justify-center ${fullScreen ? "relative px-5 lg:px-0" : "px-5"}`}
+      className={`image-block w-full flex justify-center ${fullScreen ? "relative px-5 lg:px-0" : "px-5"} `}
     >
       {fullScreen ? (
         // Full-Screen Layout
         <div 
-          className="relative w-full overflow-hidden"
+          className="relative w-full overflow-hidden last:-mt-24"
           style={{ height: sectionHeight }}
         >
           {/* Desktop Overlay */}
@@ -113,7 +113,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
         </div>
       ) : (
         // Regular Layout
-        <div className="container flex flex-col items-center justify-center py-16 lg:py-24">
+        <div className="container flex flex-col items-center justify-center">
           <motion.div
             className="w-full aspect-video w-full max-w-4xl"
             initial={{

@@ -30,7 +30,7 @@ const GalleryBlock: React.FC<GalleryBlockType> = ({
   return (
     <section
       id={`${anchor ? anchor : "gallery-block-" + componentIndex}`}
-      className={`gallery-block w-full flex justify-center${fullScreen ? "relative" : "px-5"}`}
+      className={`gallery-block w-full flex justify-center ${fullScreen ? "relative" : "px-5"}`}
     >
       {fullScreen ? (
         // Full-Screen Layout with Carousel
@@ -81,7 +81,7 @@ const GalleryBlock: React.FC<GalleryBlockType> = ({
         </div>
       ) : (
         // Regular Layout with Carousel
-        <div className="container flex flex-col items-center justify-center py-16 lg:py-24">
+        <div className="container flex flex-col items-center justify-center">
           <motion.div
             className="w-full aspect-video max-w-4xl"
             initial={{

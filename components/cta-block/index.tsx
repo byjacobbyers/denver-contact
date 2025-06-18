@@ -27,7 +27,7 @@ const CtaBlock: React.FC<CtaBlockType> = ({
       id={`${anchor ? anchor : "cta-block-" + componentIndex}`}
       className="cta-block w-full flex justify-center px-5"
     >
-      <div className={`container flex flex-col ${alignment === 'text-left' ? 'items-start' : alignment === 'text-right' ? 'items-end' : 'items-center'} justify-center py-16 lg:py-24`}>
+      <div className={`container flex flex-col ${alignment === 'text-left' ? 'items-start' : alignment === 'text-right' ? 'items-end' : 'items-center'} justify-center`}>
         <motion.div
           className={`w-full max-w-4xl ${alignment}`}
           initial={{ opacity: 0, scale: 0.95 }}

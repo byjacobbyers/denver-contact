@@ -21,7 +21,7 @@ const SpacerBlock: React.FC<SpacerBlockType> = ({
   return (
     <section
       id={`${anchor ? anchor : "spacer-block-" + componentIndex}`}
-      className={`spacer-block w-full ${paddingClasses[size]}`}
+      className={`spacer-block w-full ${paddingClasses[size]} last:-mt-24`}
     />
   )
 }

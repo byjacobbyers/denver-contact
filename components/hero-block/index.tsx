@@ -35,7 +35,7 @@ const HeroBlock: React.FC<HeroBlockType> = ({
     return (
       <section 
         id={`${anchor ? anchor : 'hero-block-' + componentIndex}`}
-        className='hero-block w-full flex justify-center px-5 py-16 lg:py-24'
+        className='hero-block w-full flex justify-center px-5'
       >
         <div className={`container flex flex-wrap md:flex-nowrap ${layoutClass} flex-col-reverse  items-center w-full gap-y-5 gap-x-24`}>
           <motion.div 
