@@ -51,7 +51,7 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
             <Button
               key={idx}
               variant={selected === idx ? 'default' : 'ghost'}
-              className={`rounded-full p-1 border-2 ${selected === idx ? 'border-primary' : 'border-transparent'} transition-all`}
+              className={`rounded-full p-1 border-2 ${selected === idx ? 'border-primary' : 'border-transparent'} transition-all w-18 h-18`}
               onClick={() => setSelected(idx)}
               aria-label={`Select review by ${review.name}`}
             >
@@ -66,11 +66,11 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
             </Button>
           ))}
         </div>
-        <div className="w-full max-w-2xl mx-auto p-8 flex flex-col items-center text-center bg-background shadow-lg rounded-xl">
+        <div className="w-full px-8 flex flex-col items-center text-center">
           <h3 className="text-2xl font-bold mb-2">{selectedReview.name}</h3>
           {/* If you add a title field to review, show it here */}
           {/* <div className="text-muted-foreground font-semibold mb-4">{selectedReview.title}</div> */}
-          <blockquote className="text-lg mb-2 w-full">
+          <blockquote className="text-lg mb-2 w-full text-balance">
             {selectedReview.content && <SimpleText content={selectedReview.content} />}
           </blockquote>
         </div>

@@ -20,16 +20,16 @@ const Review = (S, context) => {
 								.filter('_type == $type')
 								.params({ type: 'review' })
 					}),
-					orderableDocumentListDeskItem({
-						type: 'review',
-						title: 'Order Reviews',
-						icon: StarFilledIcon,
-						id: 'review-order',
-						createIntent: false,
-						menuItems: [],
-						S,
-						context,
-					}),
+					// orderableDocumentListDeskItem({
+					// 	type: 'review',
+					// 	title: 'Order Reviews',
+					// 	icon: StarFilledIcon,
+					// 	id: 'review-order',
+					// 	createIntent: false,
+					// 	menuItems: [],
+					// 	S,
+					// 	context,
+					// }),
 				])
 		)
 }
