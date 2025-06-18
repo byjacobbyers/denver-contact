@@ -36,7 +36,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
   return (
     <section
       id={`${anchor ? anchor : "image-block-" + componentIndex}`}
-      className={`image-block w-full flex justify-center ${fullScreen ? "relative px-5 lg:px-0" : "px-5"} `}
+      className={`image-block w-full flex justify-center ${fullScreen ? "relative" : "px-5"} `}
     >
       {fullScreen ? (
         // Full-Screen Layout
@@ -45,7 +45,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
           style={{ height: sectionHeight }}
         >
           {/* Desktop Overlay */}
-          <div className="hidden lg:flex absolute inset-0 bg-black/50 z-10 items-center justify-center">
+          <div className="flex absolute inset-0 bg-black/50 z-10 items-center justify-center">
             <motion.div
               className="text-white text-center w-full max-w-4xl px-5 [text-shadow:_0_1px_2px_rgb(0_0_0_/_40%)]"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -86,7 +86,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
 
           {/* Image with responsive height */}
           {image && (
-            <div className="w-full aspect-[16/9] lg:absolute lg:inset-0 lg:h-full">
+            <div className="w-full lg:aspect-[16/9] lg:absolute lg:inset-0 h-full">
               <SanityImage
                 source={image}
                 alt={image?.alt || 'Fallback image'}
@@ -98,7 +98,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
           )}
 
           {/* Mobile Text (below image) */}
-          <div className="block lg:hidden  text-center py-6 px-4 prose prose-h1:text-9xl">
+          {/* <div className="block lg:hidden  text-center py-6 px-4 prose prose-h1:text-9xl">
             {content && <SimpleText content={content} />}
             {cta && cta.active && (
               <div className='flex justify-center mt-8'>
@@ -109,7 +109,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
                 </Route>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       ) : (
         // Regular Layout
