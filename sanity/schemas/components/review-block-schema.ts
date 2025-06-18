@@ -1,6 +1,5 @@
 import { defineType, defineField } from "sanity";
 import { UsersIcon } from '@sanity/icons';
-import { Rule } from 'sanity';
 
 // Define the review block schema with an array of strings as title and an array of references to reviews
 export default defineType({
