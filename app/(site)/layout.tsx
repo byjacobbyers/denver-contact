@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Denver Contact Improv",
   description: "Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.",
   openGraph: {
-    images: ['https://cdn.sanity.io/images/lwfykyvn/production/a0f37e1b9a9505df8c3acadb8f09fe35520a4d0f-1026x514.jpg'],
+    images: ['https://cdn.sanity.io/images/evjpv7og/production/7105e194880bea48f429f16d72c136752f925735-2048x1278.jpg'],
   },
 };
 
