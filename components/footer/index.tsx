@@ -18,23 +18,23 @@ import { footerQuery } from "@/sanity/queries/components/page-nav-query"
 import FooterNav from "../navigation/footer"
 
 export default function Footer() {
-  const [navigation, setNavigation] = useState<NavigationType | null>(null)
-  const [socials, setSocials] = useState<SocialType | null>(null)
+  // const [navigation, setNavigation] = useState<NavigationType | null>(null)
+  // const [socials, setSocials] = useState<SocialType | null>(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const [navData, siteData] = await Promise.all([
-        client.fetch(footerQuery),
-        client.fetch(SiteQuery)
-      ])
-      setNavigation(navData)
-      if (siteData && siteData.length > 0) {
-        setSocials(siteData[0].social)
-      }
-		}
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const [navData, siteData] = await Promise.all([
+  //       client.fetch(footerQuery),
+  //       client.fetch(SiteQuery)
+  //     ])
+  //     setNavigation(navData)
+  //     if (siteData && siteData.length > 0) {
+  //       setSocials(siteData[0].social)
+  //     }
+	// 	}
 
-    fetchData()
-	}, [])
+  //   fetchData()
+	// }, [])
 
   // set copyright year
   const year = new Date().getFullYear()
@@ -43,9 +43,9 @@ export default function Footer() {
     <footer className="border-t-4 border-foreground bg-background px-4 py-6">
       <div className="flex items-center justify-between">
         <small className="text-sm">
-          © {year} Ohmni Web Technologies. All rights reserved.
+          © {year} Denver Contact Improv. All rights reserved.
         </small>
-        <div className="flex items-center gap-8">
+        {/* <div className="flex items-center gap-8">
           {navigation && <FooterNav data={navigation} />}
         {socials?.linkedin && (
             <Link 
@@ -56,7 +56,27 @@ export default function Footer() {
               <BiLogoLinkedin size="1.5rem" />
           </Link>
         )}
-        </div>
+        </div> */}
+        {/* <div className="flex items-center gap-8">
+          {navigation && <FooterNav data={navigation} />}
+          {socials?.linkedin && (
+            <Link 
+              href={socials.linkedin} 
+              target="_blank"
+              className="bg-foreground text-background h-10 w-10 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
+            >
+              <BiLogoLinkedin size="1.5rem" />
+            </Link>
+          )}
+          
+        </div> */}
+        <Link 
+          href="https://www.ohmni.tech/" 
+          target="_blank"
+          className="text-sm hover:opacity-90 transition-opacity"
+        >
+          Website by Ohmni
+        </Link>
       </div>
     </footer>
   )
