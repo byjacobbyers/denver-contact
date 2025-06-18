@@ -17,98 +17,66 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
+import { Button } from '@/components/ui/button'
+
+const fallbackImg = "/images/fallback-avatar.webp" // You can use a real fallback image path
 
 const ReviewBlock: React.FC<ReviewBlockType> = ({
   active,
   componentIndex,
   anchor,
   title,
-  reviews
+  reviews = []
 }) => {
   const [isMobileView, setIsMobileView] = useState<boolean>(false)
+  const [selected, setSelected] = useState(0)
 
   useEffect(() => {
     setIsMobileView(isMobile)
   }, [])
 
-  if (active) {
-    return (
-      <section
-        id={`${anchor ? anchor : 'review-block-' + componentIndex}`}
-        className={`review-block w-full flex flex-col items-center px-5`}
-      >
-        <div className='container flex flex-col text-center gap-y-10 2xl:gap-y-16'>
-          
-          <motion.div 
-            className='w-full relative flex justify-center'
-            initial={{ 
-              opacity: 0,
-              scale: 0.95
-            }}
-            whileInView={{ 
-              opacity: 1,
-              scale: 1
-            }}
-            viewport={{ once: true }} 
-            transition={{ 
-              delay: !isMobileView ? 0 : 0,
-              type: 'spring',
-              duration: 1.5
-            }}  
-          >
-            <h2 className='text-3xl 2xl:text-4xl 2xl:leading-relaxed max-w-6xl'>{title}</h2>
-          </motion.div>
-          <div className='flex flex-wrap lg:flex-nowrap gap-5 w-full justify-center items-start'>
-            {reviews && reviews.map((review, index) => {
-              return (
-                <motion.div 
-                  key={`review-${index}`} 
-                  className='review text-balance w-full p-5 border-2 border-black lg:basis-1/3'
-                  initial={{ 
-                    opacity: 0,
-                    scale: 0.95
-                  }}
-                  whileInView={{ 
-                    opacity: 1,
-                    scale: 1
-                  }}
-                  viewport={{ once: true }} 
-                  transition={{ 
-                    delay: !isMobileView ? 0+index*0.5 : 0,
-                    type: 'spring',
-                    duration: 1.5
-                  }}  
-                >
-                  <div className='w-full flex flex-col items-center  justify-center gap-y-10'>
-                    <div className='review-title w-full flex flex-col items-center gap-y-5'>
-                      <div className='space-y-3'>
-                        {review?.image?.asset.url && (
-                          <Avatar>
-                            <AvatarImage src={review?.image?.asset.url} alt={review?.name} />
-                            <AvatarFallback>{review?.name}</AvatarFallback>
-                          </Avatar>
-                        )}
-                      </div>
-                      {review?.content && (
-                        <div className='text-lg 2xl:text-xl space-y-2'>
-                          <SimpleText content={review?.content} />
-                        </div>
-                      )}
-                    </div>
-                    <div className='flex flex-col text-center'>
-                      {review?.name && (<h3 className='text-2xl font-bold'>{review?.name}</h3>)}
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-    )
-  }
+  if (!active || !reviews.length) return null
 
-  return null
+  const selectedReview = reviews[selected]
+
+  return (
+    <section
+      id={`${anchor ? anchor : 'review-block-' + componentIndex}`}
+      className="review-block w-full flex flex-col items-center px-5 bg-accent py-10 lg:py-24"
+    >
+      <div className="container flex flex-col items-center gap-y-10">
+        <h2 className="text-3xl 2xl:text-4xl font-bold w-full text-left mb-8">{title || 'TESTIMONIALS'}</h2>
+        <div className="flex flex-row items-center justify-center gap-4 mb-8">
+          {reviews.map((review, idx) => (
+            <Button
+              key={idx}
+              variant={selected === idx ? 'default' : 'ghost'}
+              className={`rounded-full p-1 border-2 ${selected === idx ? 'border-primary' : 'border-transparent'} transition-all`}
+              onClick={() => setSelected(idx)}
+              aria-label={`Select review by ${review.name}`}
+            >
+              <Avatar className="w-16 h-16">
+                {review?.image?.asset?.url ? (
+                  <AvatarImage src={review.image.asset.url} alt={review.name} />
+                ) : (
+                  <AvatarImage src={fallbackImg} alt={review.name} />
+                )}
+                <AvatarFallback>{review.name?.[0] || '?'}</AvatarFallback>
+              </Avatar>
+            </Button>
+          ))}
+        </div>
+        <div className="w-full max-w-2xl mx-auto p-8 flex flex-col items-center text-center bg-background shadow-lg rounded-xl">
+          <h3 className="text-2xl font-bold mb-2">{selectedReview.name}</h3>
+          {/* If you add a title field to review, show it here */}
+          {/* <div className="text-muted-foreground font-semibold mb-4">{selectedReview.title}</div> */}
+          <blockquote className="text-lg mb-2 w-full">
+            {selectedReview.content && <SimpleText content={selectedReview.content} />}
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default ReviewBlock

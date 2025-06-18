@@ -33,10 +33,22 @@ const imageBlock = defineType({
       initialValue: false,
     }),
     defineField({
+      title: "Half Height",
+      name: "halfHeight",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => !parent?.fullScreen,
+    }),
+    defineField({
       title: "Content",
       name: "content",
       type: "simpleText",
       description: "Text content to display alongside or over the image.",
+    }),
+    defineField({
+        title: "CTA",
+        name: "cta",
+        type: "cta",
     }),
   ],
   preview: {

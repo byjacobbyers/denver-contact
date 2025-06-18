@@ -84,7 +84,13 @@ export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
       ...,
       image {
         ${imageQuery}
-      }
+      },
+      cta {
+        ...,
+        route {
+          ${routeQuery}
+        }
+      },
     },
     _type == 'galleryBlock' => {
       ...,

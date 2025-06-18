@@ -10,6 +10,8 @@ import { ImageBlockType } from "@/types/components/image-block-type"
 import SimpleText from "@/components/simple-text"
 import SanityImage from "@/components/sanity-image"
 import { useHeaderHeight } from '@/contexts/header-context'
+import Route from '@/components/route'
+import { Button } from "@/components/ui/button"
 
 const ImageBlock: React.FC<ImageBlockType> = ({
   active,
@@ -17,12 +19,18 @@ const ImageBlock: React.FC<ImageBlockType> = ({
   anchor,
   image,
   fullScreen,
+  halfHeight,
   content,
+  cta,
 }) => {
   const { headerHeight } = useHeaderHeight()
 
-  console.log(headerHeight)
-  
+  // Determine height for fullscreen
+  let sectionHeight = `calc(100vh - ${headerHeight}px)`
+  if (fullScreen && halfHeight) {
+    sectionHeight = `calc(50vh - ${headerHeight}px)`
+  }
+
   if (!active) return null
 
   return (
@@ -34,7 +42,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
         // Full-Screen Layout
         <div 
           className="relative w-full overflow-hidden"
-          style={{ height: `calc(100vh - ${headerHeight}px)` }}
+          style={{ height: sectionHeight }}
         >
           {/* Desktop Overlay */}
           <div className="hidden lg:flex absolute inset-0 bg-black/50 z-10 items-center justify-center">
@@ -50,6 +58,29 @@ const ImageBlock: React.FC<ImageBlockType> = ({
               }}
             >
               {content && <SimpleText content={content} />}
+              {cta && cta.active && (
+                <motion.div 
+                  className='flex justify-center mt-8'
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: componentIndex !== 0 ? 0.5 : 0, type: 'spring', duration: 1.5 }}
+                >
+                  <Route data={cta.route} className='flex'>
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: 'spring', duration: 0.5 }}
+                      className='flex w-full'
+                    >
+                      <Button>
+                        {cta?.route?.title ? cta?.route?.title : 'Learn More'}
+                      </Button>
+                    </motion.div>
+                  </Route>
+                </motion.div>
+              )}
             </motion.div>
           </div>
 
@@ -69,6 +100,15 @@ const ImageBlock: React.FC<ImageBlockType> = ({
           {/* Mobile Text (below image) */}
           <div className="block lg:hidden  text-center py-6 px-4 prose prose-h1:text-9xl">
             {content && <SimpleText content={content} />}
+            {cta && cta.active && (
+              <div className='flex justify-center mt-8'>
+                <Route data={cta.route} className='flex w-full'>
+                  <Button>
+                    {cta?.route?.title ? cta?.route?.title : 'Learn More'}
+                  </Button>
+                </Route>
+              </div>
+            )}
           </div>
         </div>
       ) : (
@@ -121,6 +161,21 @@ const ImageBlock: React.FC<ImageBlockType> = ({
               }}
             >
               <SimpleText content={content} />
+            </motion.div>
+          )}
+          {cta && cta.active && (
+            <motion.div
+              className='flex justify-center mt-8'
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: componentIndex !== 0 ? 0.5 : 0, type: 'spring', duration: 1.5 }}
+            >
+              <Route data={cta.route} className='flex w-full'>
+                <Button>
+                  {cta?.route?.title ? cta?.route?.title : 'Learn More'}
+                </Button>
+              </Route>
             </motion.div>
           )}
         </div>
