@@ -3,29 +3,39 @@
 // Tools
 import { motion } from "framer-motion"
 import { format, parseISO } from 'date-fns'
+import { useState, useEffect } from 'react'
 
 // Types
 import { EventType } from "@/types/documents/event-type"
 
 // Components
 import SanityImage from "@/components/sanity-image"
-import NormalText from "@/components/normal-text"
 import Sections from "@/components/sections"
 
 export default function EventSingle({ event }: { event: EventType }) {
   const { title, image, startDate, endDate, location, sections } = event
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <article className="flex min-h-screen flex-col items-center gap-y-24 pb-12 lg:pb-24">
       {/* Hero Image Section */}
-      <section className="w-full">
+      <section className="w-full -mt-24">
         {image && (
           <div className="w-full">
             <SanityImage
               source={image}
               alt={image?.alt || 'Event image'}
               width={1920}
-              height={600}
+              height={isMobile ? 1200 : 600}
               className="w-full h-full object-cover"
             />
           </div>
