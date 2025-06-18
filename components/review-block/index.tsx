@@ -45,7 +45,19 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
       className="review-block w-full flex flex-col items-center px-5 bg-accent py-16 lg:py-24"
     >
       <div className="container flex flex-col items-center gap-y-10">
-        <h2 className="text-3xl 2xl:text-4xl font-bold w-full text-left mb-8">{title || 'TESTIMONIALS'}</h2>
+        <motion.div
+          className="w-full relative flex"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            delay: !isMobileView ? 0 : 0,
+            type: 'spring',
+            duration: 1.5,
+          }}
+        >
+          <h2 className="text-3xl 2xl:text-4xl font-bold w-full text-left mb-8">{title || 'TESTIMONIALS'}</h2>
+        </motion.div>
         <div className="flex flex-row items-center justify-center gap-4 mb-8">
           {reviews.map((review, idx) => (
             <Button
@@ -66,14 +78,24 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
             </Button>
           ))}
         </div>
-        <div className="w-full px-8 flex flex-col items-center text-center">
+        <motion.div
+          className="w-full px-8 flex flex-col items-center text-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            delay: !isMobileView ? 0 : 0,
+            type: 'spring',
+            duration: 1.5,
+          }}
+        >
           <h3 className="text-2xl font-bold mb-2">{selectedReview.name}</h3>
           {/* If you add a title field to review, show it here */}
           {/* <div className="text-muted-foreground font-semibold mb-4">{selectedReview.title}</div> */}
           <blockquote className="text-lg mb-2 w-full text-balance">
             {selectedReview.content && <SimpleText content={selectedReview.content} />}
           </blockquote>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
