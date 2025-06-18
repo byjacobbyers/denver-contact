@@ -42,7 +42,7 @@ export default function Footer() {
   return (
     <footer className="border-t-4 border-foreground bg-background px-4 py-6">
       <div className="flex items-center justify-between">
-        <small className="text-sm">
+        <small className="text-sm w-1/2">
           © {year} Denver Contact Improv. All rights reserved.
         </small>
         {/* <div className="flex items-center gap-8">

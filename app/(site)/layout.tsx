@@ -56,7 +56,7 @@ export default async function RootLayout({
             )}
             <Script
               defer
-              data-domain="unison-crew.vercel.app"
+              data-domain="denvercontactimprov.com"
               src="https://plausible.io/js/script.hash.outbound-links.js"
               strategy="afterInteractive"
             />
