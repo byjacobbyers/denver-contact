@@ -1,0 +1,45 @@
+import { defineType, defineField } from "sanity";
+import { CalendarIcon } from '@sanity/icons';
+
+// Define the review block schema with an array of strings as title and an array of references to reviews
+export default defineType({
+  title: "Events Block",
+  name: "eventsBlock",
+  icon: CalendarIcon,
+  type: "object",
+  fields: [
+    defineField({
+      title: 'Active',
+      name: 'active',
+      type: 'boolean',
+      description: 'Set to false if you need to remove from page but not delete',
+      initialValue: true,
+    }),
+    defineField({
+      title: 'Anchor',
+      name: 'anchor',
+      type: 'string',
+      description: 'The anchor for the section. No hash symbols. Optional.',
+      validation: Rule => Rule.regex(/^[a-z0-9-]+$/).warning('Use only lowercase letters, numbers, and hyphens'),
+    }),
+    defineField({
+      name: 'title',
+      type: 'string',
+      validation: Rule => Rule.required(),
+      initialValue: 'Upcoming Events',
+      readOnly: true,
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      active: 'active',
+    },
+    prepare({ title, active }) {
+      return {
+        title: title || 'Events',
+        subtitle: active ? 'Active' : 'Inactive',
+      }
+    },
+  }
+});

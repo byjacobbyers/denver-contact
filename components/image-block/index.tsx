@@ -67,7 +67,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
           )}
 
           {/* Mobile Text (below image) */}
-          <div className="block lg:hidden  text-center py-6 px-4">
+          <div className="block lg:hidden  text-center py-6 px-4 prose prose-h1:text-9xl">
             {content && <SimpleText content={content} />}
           </div>
         </div>
@@ -104,7 +104,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
           </motion.div>
           {content && (
             <motion.div
-              className="text-center w-full max-w-4xl mt-10"
+              className="text-center w-full max-w-4xl mt-10 prose prose-h1:text-9xl"
               initial={{
                 opacity: 0,
                 scale: 0.95,

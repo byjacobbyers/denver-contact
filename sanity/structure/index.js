@@ -11,7 +11,7 @@ export const deskStructure = (S, context) => {
 		.items([
 			Page(S),
       Event(S),
-      Person(S),
+      // Person(S),
       Review(S, context),
 			Global(S, context),
 			Navigation(S),

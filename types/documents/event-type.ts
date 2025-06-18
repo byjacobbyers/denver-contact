@@ -1,4 +1,6 @@
 import { PersonType } from './person-type'
+import { NormalTextType } from '../objects/normal-text-type'
+import { DefaultImageType } from "../objects/default-img-type";
 
 export interface EventType {
   _id: string
@@ -7,10 +9,13 @@ export interface EventType {
   slug: {
     current: string
   }
+  image?: DefaultImageType
   startDate: string
   endDate?: string
   location?: string
-  description?: string
+  content?: {
+		text: NormalTextType
+	}
   guestTeachers?: PersonType[]
   flyer?: {
     asset: {
