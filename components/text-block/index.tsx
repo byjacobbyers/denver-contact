@@ -40,7 +40,7 @@ const TextBlock: React.FC<TextBlockType> = ({
     return (
       <section
         id={`${anchor ? anchor : 'text-block-' + componentIndex}`}
-        className={`flex flex-col items-center`}
+        className={`flex flex-col items-center px-5`}
       >
         {content && (
           <motion.div 
