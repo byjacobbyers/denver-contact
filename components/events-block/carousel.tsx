@@ -4,13 +4,15 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { isMobile } from 'react-device-detect';
-import Autoplay from "embla-carousel-autoplay"
+import { format } from 'date-fns';
+import { client } from "@/sanity/lib/client";
+import { eventsQuery } from "@/sanity/queries/documents/event-query";
+import Link from "next/link";
 
 // Types
-import { ReviewBlockType } from "@/types/components/review-block-type";
+import { EventType } from "@/types/documents/event-type";
 
 // Components
-import SimpleText from "@/components/simple-text";
 import {
   Carousel,
   CarouselContent,
@@ -18,108 +20,108 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import SanityImage from "@/components/sanity-image";
 
-const ReviewBlock: React.FC<ReviewBlockType> = ({
-  active,
-  componentIndex,
-  anchor,
-  title,
-  reviews
-}) => {
-  const [isMobileView, setIsMobileView] = useState<boolean>(false);
+const EventCarousel = () => {
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsMobileView(isMobile);
+    const fetchEvents = async () => {
+      try {
+        const data = await client.fetch(eventsQuery);
+
+        // Filter out past events and sort by start date
+        const now = new Date();
+        const upcomingEvents = data
+          .filter((event: EventType) => new Date(event.startDate) >= now)
+          .sort((a: EventType, b: EventType) => 
+            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          );
+
+        setEvents(upcomingEvents);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEvents();
   }, []);
 
-  if (active) {
-    return (
-      <section
-        id={`${anchor ? anchor : 'review-block-' + componentIndex}`}
-        className={`review-block w-full flex flex-col items-center px-5`}
-      >
-        <div className="container flex flex-col text-center gap-y-10 2xl:gap-y-16">
-          {/* Animated Title */}
-          <motion.div
-            className="w-full relative flex justify-center"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              delay: !isMobileView ? 0 : 0,
-              type: 'spring',
-              duration: 1.5,
-            }}
-          >
-            <h2 className="text-3xl 2xl:text-4xl 2xl:leading-relaxed max-w-6xl">
-              {title}
-            </h2>
-          </motion.div>
-
-          {/* Carousel with Animated Reviews */}
-          <Carousel 
-            className="w-full mx-auto"
-            opts={{
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 5000,
-              }),
-            ]}
-          >
-            {reviews && reviews.length > 3 && <CarouselPrevious/>}
-            
-            <CarouselContent className="">
-              {reviews && reviews.map((review, i) => (
-                <CarouselItem key={i}  className="w-full lg:basis-1/3 h-full">
-                  <motion.div
-                    className="review flex text-balance p-5 border-2 border-black h-full "
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      delay: !isMobileView ? 0 + i * 0.5 : 0,
-                      type: 'spring',
-                      duration: 1.5,
-                    }}
-                  >
-                    <div className="w-full flex flex-col items-center justify-center gap-y-10">
-                      <div className="review-title w-full flex flex-col items-center gap-y-5">
-                        <div className="space-y-3">
-                          {review?.image?.asset.url && (
-                            <Avatar>
-                              <AvatarImage src={review?.image?.asset.url} alt={review?.name} />
-                              <AvatarFallback>{review?.name}</AvatarFallback>
-                            </Avatar>
-                          )}
-                        </div>
-                        {review?.content && (
-                          <div className="text-lg 2xl:text-xl space-y-2 text-balance">
-                            <SimpleText content={review?.content} />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col text-center">
-                        {review?.name && <h3 className="text-2xl font-bold">{review?.name}</h3>}
-                      </div>
-                    </div>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {reviews && reviews.length > 3 && <CarouselNext/>}
-          </Carousel>
-        </div>
-      </section>
-    );
+  if (isLoading) {
+    return <div>Loading events...</div>;
   }
 
-  return null;
+  if (!events.length) {
+    return null;
+  }
+
+  return (
+    <div className="w-full">
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent>
+          {events.map((event) => (
+            <CarouselItem key={event._id} className="md:basis-1/2 lg:basis-1/3">
+              <Link href={`/events/${event.slug.current}`}>
+                <Card className="h-full hover:shadow-lg transition-shadow duration-200">
+                  <CardHeader className="p-0">
+                    {event.image && (
+                      <div className="aspect-[16/9] w-full overflow-hidden">
+                        <SanityImage
+                          source={event.image}
+                          alt={event.title}
+                          width={800}
+                          height={450}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </CardHeader>
+                  <CardContent className="p-4">
+                    <div className="flex flex-col gap-2">
+                      <Badge variant="outline" className="w-fit">
+                        {event.eventType}
+                      </Badge>
+                      <h3 className="text-xl font-semibold line-clamp-2">
+                        {event.title}
+                      </h3>
+                      <div className="text-sm text-muted-foreground">
+                        {format(new Date(event.startDate), 'MMMM d, yyyy')}
+                        {event.endDate && 
+                          ` - ${format(new Date(event.endDate), 'MMMM d, yyyy')}`
+                        }
+                      </div>
+                      {event.location && (
+                        <p className="text-sm text-muted-foreground">
+                          {event.location}
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        {events.length > 3 && (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+          </>
+        )}
+      </Carousel>
+    </div>
+  );
 };
 
-export default ReviewBlock;
+export default EventCarousel;

@@ -12,6 +12,7 @@ export interface EventType {
   image?: DefaultImageType
   startDate: string
   endDate?: string
+  eventType?: string
   location?: string
   content?: {
 		text: NormalTextType
