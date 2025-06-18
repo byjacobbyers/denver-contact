@@ -40,7 +40,7 @@ export default function EventSingle({ event }: { event: EventType }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-7xl mb-6">{title}</h1>
+          <h1 className="lg:text-7xl mb-6">{title}</h1>
           <div className="flex flex-col gap-2 text-xl">
             <div>
               {startDate && (
