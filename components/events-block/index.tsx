@@ -27,7 +27,7 @@ const EventsBlock: React.FC<EventsBlockType> = ({
     return (
       <section
         id={`${anchor ? anchor : 'events-block-' + componentIndex}`}
-        className="w-full flex flex-col items-center px-5 py-24 bg-accent"
+        className="w-full flex flex-col items-center px-5 py-16 lg:py-24 bg-accent"
       >
         <div className="container flex flex-col lg:flex-row gap-y-10 2xl:gap-y-16">
           <motion.div

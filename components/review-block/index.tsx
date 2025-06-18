@@ -42,7 +42,7 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
   return (
     <section
       id={`${anchor ? anchor : 'review-block-' + componentIndex}`}
-      className="review-block w-full flex flex-col items-center px-5 bg-accent py-10 lg:py-24"
+      className="review-block w-full flex flex-col items-center px-5 bg-accent py-16 lg:py-24"
     >
       <div className="container flex flex-col items-center gap-y-10">
         <h2 className="text-3xl 2xl:text-4xl font-bold w-full text-left mb-8">{title || 'TESTIMONIALS'}</h2>
