@@ -16,7 +16,7 @@ import {schema} from '@/sanity/schemas'
 
 export default defineConfig({
   name: 'default',
-  title: 'Your Project Name',
+  title: 'Denver Contact Improv',
   basePath: '/studio',
   projectId,
   dataset,
