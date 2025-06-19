@@ -13,7 +13,7 @@ import SanityImage from "@/components/sanity-image"
 import Sections from "@/components/sections"
 
 export default function EventSingle({ event }: { event: EventType }) {
-  const { title, image, startDate, endDate, location, sections } = event
+  const { title, image, startDate, endDate, location, sections, timeString } = event
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -60,6 +60,7 @@ export default function EventSingle({ event }: { event: EventType }) {
                 </p>
               )}
             </div>
+            {timeString && <p>{timeString}</p>}
             {location && <p>{location}</p>}
           </div>
         </motion.div>

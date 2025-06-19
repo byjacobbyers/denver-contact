@@ -102,6 +102,9 @@ const EventCarousel = () => {
                           ` - ${format(parseSanityDate(event.endDate), 'MMMM d, yyyy')}`
                         }
                       </div>
+                      <div className="text-sm text-muted-foreground">
+                        {event.timeString}
+                      </div>
                       {event.location && (
                         <p className="text-sm text-muted-foreground">
                           {event.location}

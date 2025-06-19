@@ -80,6 +80,13 @@ export default defineType({
       group: 'event',
       initialValue: () => new Date().toISOString(),
     }),
+    defineField({
+      title: 'Day & Time',
+      name: 'timeString',
+      type: 'string',
+      group: 'event',
+      initialValue: '6:30pm - 8:30pm',
+    }),
     // defineField({
     //   title: 'Pricing Details',
     //   name: 'pricing',
