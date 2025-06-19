@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { isMobile } from 'react-device-detect';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { client } from "@/sanity/lib/client";
 import { eventsQuery } from "@/sanity/queries/documents/event-query";
 import Link from "next/link";
@@ -23,6 +23,8 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/sanity-image";
+
+const parseSanityDate = (dateStr: string) => parseISO(dateStr + 'T12:00:00');
 
 const EventCarousel = () => {
   const [events, setEvents] = useState<EventType[]>([]);
@@ -95,9 +97,9 @@ const EventCarousel = () => {
                         {event.title}
                       </h3>
                       <div className="text-sm text-muted-foreground">
-                        {format(new Date(event.startDate), 'MMMM d, yyyy')}
+                        {format(parseSanityDate(event.startDate), 'MMMM d, yyyy')}
                         {event.endDate && 
-                          ` - ${format(new Date(event.endDate), 'MMMM d, yyyy')}`
+                          ` - ${format(parseSanityDate(event.endDate), 'MMMM d, yyyy')}`
                         }
                       </div>
                       {event.location && (
