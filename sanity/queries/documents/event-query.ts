@@ -63,6 +63,12 @@ export const eventQuery = groq`
       social,
       website
     },
+    seo {
+      ...,
+      shareGraphic {
+        ${imageQuery}
+      }
+    },
     sections[] {
       ...,
       _type == 'heroBlock' => {

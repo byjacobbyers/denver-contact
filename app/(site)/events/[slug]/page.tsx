@@ -29,15 +29,16 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: any
+  params: Promise<{ slug: string }>
 }
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   try {
+    const resolvedParams = await params
     const [{ data: event }, { data: global }] = await Promise.all([
       sanityFetch({
         query: eventQuery,
-        params: { slug: params.event },
+        params: { slug: resolvedParams.slug },
       }),
       sanityFetch({
         query: SiteQuery
@@ -45,16 +46,20 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     ])
 
     if (!event) {
-      return notFound();
+      notFound();
     }
 
+    console.log('event', event)
+
+    const pageSeo = event?.seo || {}
     const globalSeo = global?.[0]?.seo || {}
 
     const result = {
-      title: event?.title || 'Event',
-      description: event?.content?.text?.[0]?.children?.[0]?.text || 'Join us for this event at Denver Contact Improv.',
-      image: event?.image?.asset?.url
-        ? urlFor(event.image.asset.url).width(1200).height(630).url()
+      noIndex: pageSeo?.noIndex ?? false,
+      title: pageSeo?.metaTitle || globalSeo?.metaTitle || 'Page',
+      description: pageSeo?.metaDesc || globalSeo?.metaDesc || 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
+      image: pageSeo?.shareGraphic?.asset?.url
+        ? urlFor(pageSeo.shareGraphic.asset.url).width(1200).height(630).url()
         : `/api/og?id=${event._id}`
     }
 
@@ -93,9 +98,10 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export default async function EventPage({ params }: { params: Promise<QueryParams> }) {
   try {
+    const resolvedParams = await params
     const { data: event } = await sanityFetch({
       query: eventQuery,
-      params: await params,
+      params: { slug: resolvedParams.slug },
     })
 
     if (!event) {
