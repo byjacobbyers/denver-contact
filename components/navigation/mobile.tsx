@@ -15,7 +15,7 @@ import { RouteType } from "@/types/objects/route-type"
 import Route from "@/components/route"
 
 interface NavProps {
-  data: NavigationType,
+  data: NavigationType
   closeMenu: () => void
 }
 
@@ -30,7 +30,7 @@ const MobileNav: React.FC<NavProps> = ({
 
   return (
     <NavigationMenu className='w-full max-w-none mobile-menu'>
-      <NavigationMenuList className='w-full flex flex-col gap-y-5 space-x-0 gap-x-2 lg:gap-x-10'>
+      <NavigationMenuList className='w-full flex flex-col p-0 gap-y-5'>
         {data.items?.map((item: RouteType, index: number) => (
           <NavigationMenuItem 
             key={'header' + index}
