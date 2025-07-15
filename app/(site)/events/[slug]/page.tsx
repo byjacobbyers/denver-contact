@@ -50,7 +50,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     }
 
     const pageSeo = event?.seo || {}
-    const globalSeo = global?.[0]?.seo || {}
+    const globalSeo = global?.seo || {}
 
     const result = {
       noIndex: pageSeo?.noIndex ?? false,

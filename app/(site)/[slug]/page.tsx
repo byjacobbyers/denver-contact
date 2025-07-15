@@ -41,10 +41,11 @@ type Props = {
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   try {
+    const resolvedParams = await params
     const [{ data: page }, { data: global }] = await Promise.all([
       sanityFetch({
         query: pageQuery,
-        params: params,
+        params: { slug: resolvedParams.slug },
       }),
       sanityFetch({
         query: SiteQuery
@@ -52,12 +53,14 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     ])
 
     if (!page) {
-      return notFound();
+      notFound();
     }
 
-    // Add null checks and default values
     const pageSeo = page?.seo || {}
-    const globalSeo = global?.[0]?.seo || {}
+    const globalSeo = global?.seo || {}
+
+    console.log('pageSeo', pageSeo)
+    console.log('globalSeo', globalSeo)
 
     const result = {
       noIndex: pageSeo?.noIndex ?? false,
@@ -67,6 +70,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
         ? urlFor(pageSeo.shareGraphic.asset.url).width(1200).height(630).url()
         : urlFor(globalSeo.shareGraphic.asset.url).width(1200).height(630).url()
     }
+
+    console.log('result', result)
 
     return {
       generator: 'Next.js',
