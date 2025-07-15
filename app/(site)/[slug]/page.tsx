@@ -65,7 +65,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       description: pageSeo?.metaDesc || globalSeo?.metaDesc || 'Discover Denver Contact Improv — a dynamic movement community exploring connection, spontaneity, and embodied creativity through contact improvisation. Join our weekly jams, classes, and events.',
       image: pageSeo?.shareGraphic?.asset?.url
         ? urlFor(pageSeo.shareGraphic.asset.url).width(1200).height(630).url()
-        : `/api/og?id=${page._id}`
+        : urlFor(globalSeo.shareGraphic.asset.url).width(1200).height(630).url()
     }
 
     return {
