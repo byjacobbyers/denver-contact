@@ -49,8 +49,6 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       notFound();
     }
 
-    console.log('event', event)
-
     const pageSeo = event?.seo || {}
     const globalSeo = global?.[0]?.seo || {}
 
