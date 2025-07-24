@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@hookform/resolvers':
+        specifier: ^5.1.1
+        version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       '@mux/mux-player-react':
         specifier: ^3.4.0
         version: 3.4.0(@types/react-dom@19.1.6(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -89,6 +92,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.60.0
+        version: 7.60.0(react@19.1.0)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
@@ -110,6 +116,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.1.8)
+      zod:
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -1086,6 +1095,11 @@ packages:
     resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
     peerDependencies:
       react-hook-form: ^7.0.0
+
+  '@hookform/resolvers@5.1.1':
+    resolution: {integrity: sha512-J/NVING3LMAEvexJkyTLjruSm7aOFx7QX21pzkiJfMoNG0wl5aFEjLTl7ay7IQb9EWY6AkrBy7tHL2Alijpdcg==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -5416,8 +5430,8 @@ packages:
       '@types/react':
         optional: true
 
-  react-hook-form@7.57.0:
-    resolution: {integrity: sha512-RbEks3+cbvTP84l/VXGUZ+JMrKOS8ykQCRYdm5aYsxnDquL0vspsyNhGRO7pcH6hsZqWlPOjLye7rJqdtdAmlg==}
+  react-hook-form@7.60.0:
+    resolution: {integrity: sha512-SBrYOvMbDB7cV8ZfNpaiLcgjH/a1c7aK0lK+aNigpf4xWLO8q+o4tcvVurv3c4EOyzn/3dCsYt4GKD42VvJ/+A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -6651,6 +6665,9 @@ packages:
   zod@3.25.56:
     resolution: {integrity: sha512-rd6eEF3BTNvQnR2e2wwolfTmUTnp70aUTqr0oaGbHifzC3BKJsoV+Gat8vxUMR1hwOKBs6El+qWehrHbCpW6SQ==}
 
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
+
   zustand@5.0.5:
     resolution: {integrity: sha512-mILtRfKW9xM47hqxGIxCv12gXusoY/xTSHBYApXozR0HmQv299whhBeeAcRy+KrPPybzosvJBCOmVjq6x12fCg==}
     engines: {node: '>=12.20.0'}
@@ -7800,9 +7817,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@hookform/resolvers@3.10.0(react-hook-form@7.57.0(react@19.1.0))':
+  '@hookform/resolvers@3.10.0(react-hook-form@7.60.0(react@19.1.0))':
     dependencies:
-      react-hook-form: 7.57.0(react@19.1.0)
+      react-hook-form: 7.60.0(react@19.1.0)
+
+  '@hookform/resolvers@5.1.1(react-hook-form@7.60.0(react@19.1.0))':
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.60.0(react@19.1.0)
 
   '@humanfs/core@0.19.1': {}
 
@@ -12554,7 +12576,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.6
 
-  react-hook-form@7.57.0(react@19.1.0):
+  react-hook-form@7.60.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
@@ -12900,7 +12922,7 @@ snapshots:
 
   sanity-plugin-media@3.0.3(@sanity/ui@2.15.18(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)(styled-components@6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0)))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)(sanity@3.91.0(@emotion/is-prop-valid@1.2.2)(@types/node@20.19.0)(@types/react@19.1.6)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.30.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(yaml@2.8.0))(styled-components@6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0)):
     dependencies:
-      '@hookform/resolvers': 3.10.0(react-hook-form@7.57.0(react@19.1.0))
+      '@hookform/resolvers': 3.10.0(react-hook-form@7.60.0(react@19.1.0))
       '@reduxjs/toolkit': 2.8.2(react-redux@9.2.0(@types/react@19.1.6)(react@19.1.0)(redux@5.0.1))(react@19.1.0)
       '@sanity/client': 6.29.1(debug@4.4.1)
       '@sanity/color': 3.0.6
@@ -12920,7 +12942,7 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       react-dropzone: 11.7.1(react@19.1.0)
       react-file-icon: 1.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react-hook-form: 7.57.0(react@19.1.0)
+      react-hook-form: 7.60.0(react@19.1.0)
       react-is: 18.3.1
       react-redux: 9.2.0(@types/react@19.1.6)(react@19.1.0)(redux@5.0.1)
       react-select: 5.10.1(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -14086,6 +14108,8 @@ snapshots:
       readable-stream: 4.7.0
 
   zod@3.25.56: {}
+
+  zod@4.0.5: {}
 
   zustand@5.0.5(@types/react@19.1.6)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)):
     optionalDependencies:

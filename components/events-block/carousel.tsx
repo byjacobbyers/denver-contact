@@ -38,7 +38,13 @@ const EventCarousel = () => {
         // Filter out past events and sort by start date
         const now = new Date();
         const upcomingEvents = data
-          .filter((event: EventType) => new Date(event.startDate) >= now)
+          .filter((event: EventType) => {
+            // Show event if now is before or equal to the end date (or if no endDate, use startDate)
+            const endDate = event.endDate ? new Date(event.endDate) : new Date(event.startDate);
+            // Add 1 day to endDate to include the whole end day
+            endDate.setHours(23, 59, 59, 999);
+            return endDate >= now;
+          })
           .sort((a: EventType, b: EventType) => 
             new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
           );
