@@ -56,7 +56,7 @@ export default function EventSingle({ event }: { event: EventType }) {
               {startDate && (
                 <p>
                   {format(parseISO(startDate), 'MMMM d, yyyy')}
-                  {endDate && ` - ${format(parseISO(endDate), 'MMMM d, yyyy')}`}
+                  {endDate && startDate !== endDate && ` - ${format(parseISO(endDate), 'MMMM d, yyyy')}`}
                 </p>
               )}
             </div>

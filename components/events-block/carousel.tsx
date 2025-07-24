@@ -104,7 +104,7 @@ const EventCarousel = () => {
                       </h3>
                       <div className="text-sm text-muted-foreground">
                         {format(parseSanityDate(event.startDate), 'MMMM d, yyyy')}
-                        {event.endDate && 
+                        {event.endDate && event.startDate !== event.endDate &&
                           ` - ${format(parseSanityDate(event.endDate), 'MMMM d, yyyy')}`
                         }
                       </div>
