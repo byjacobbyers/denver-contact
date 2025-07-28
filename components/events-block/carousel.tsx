@@ -99,7 +99,7 @@ const EventCarousel = () => {
       >
         <CarouselContent className={`${events.length > 3 ? 'w-full' : 'w-full md:flex md:justify-center'}`}>
           {events.map((event) => (
-            <CarouselItem key={event._id} className="basis-full md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={event._id} className="basis-[85%] md:basis-1/2 lg:basis-1/3">
               <Link href={`/events/${event.slug.current}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-200">
                   <CardHeader className="p-0">
