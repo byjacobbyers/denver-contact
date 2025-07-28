@@ -71,11 +71,11 @@ export default function Footer() {
           
         </div> */}
         <Link 
-          href="https://www.ohmni.tech/" 
+          href="https://www.jacobbyers.me/" 
           target="_blank"
           className="text-sm hover:opacity-90 transition-opacity"
         >
-          Website by Ohmni
+          Website by Jacob Byers
         </Link>
       </div>
     </footer>
