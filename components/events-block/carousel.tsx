@@ -19,6 +19,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -30,6 +31,7 @@ const parseSanityDate = (dateStr: string) => parseISO(dateStr + 'T12:00:00');
 const EventCarousel = () => {
   const [events, setEvents] = useState<EventType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -61,6 +63,17 @@ const EventCarousel = () => {
     fetchEvents();
   }, []);
 
+  // Auto-advance carousel
+  useEffect(() => {
+    if (!api || events.length <= 1) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 4000); // 4 seconds per slide
+
+    return () => clearInterval(interval);
+  }, [api, events.length]);
+
   if (isLoading) {
     return <div>Loading events...</div>;
   }
@@ -75,12 +88,14 @@ const EventCarousel = () => {
         opts={{
           align: "start",
           loop: true,
+          dragFree: true,
         }}
         plugins={[
           Autoplay({
             delay: 4000,
           }),
         ]}
+        setApi={setApi}
       >
         <CarouselContent className={`${events.length > 3 ? 'w-full' : 'w-full md:flex md:justify-center'}`}>
           {events.map((event) => (
