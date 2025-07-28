@@ -63,16 +63,7 @@ const EventCarousel = () => {
     fetchEvents();
   }, []);
 
-  // Auto-advance carousel
-  useEffect(() => {
-    if (!api || events.length <= 1) return;
-
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 4000); // 4 seconds per slide
-
-    return () => clearInterval(interval);
-  }, [api, events.length]);
+  // Remove the manual auto-advance useEffect since we're using the autoplay plugin
 
   if (isLoading) {
     return <div>Loading events...</div>;
@@ -89,12 +80,12 @@ const EventCarousel = () => {
           align: "start",
           loop: true,
         }}
-        plugins={[
-          Autoplay({
-            delay: 8000,
-            //stopOnInteraction: false,
-          }),
-        ]}
+        // plugins={[
+        //   Autoplay({
+        //     delay: 8000,
+        //     //stopOnInteraction: false,
+        //   }),
+        // ]}
         setApi={setApi}
       >
         <CarouselContent className={`${events.length > 3 ? 'w-full' : 'w-full md:flex md:justify-center'}`}>
