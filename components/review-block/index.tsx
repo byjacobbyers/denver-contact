@@ -36,15 +36,15 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
   }, [])
 
   // Auto-play through reviews
-  useEffect(() => {
-    if (!reviews.length || reviews.length <= 1) return;
+  // useEffect(() => {
+  //   if (!reviews.length || reviews.length <= 1) return;
 
-    const interval = setInterval(() => {
-      setSelected((prev) => (prev + 1) % reviews.length);
-    }, 3000); // 3 seconds per review
+  //   const interval = setInterval(() => {
+  //     setSelected((prev) => (prev + 1) % reviews.length);
+  //   }, 3000); // 3 seconds per review
 
-    return () => clearInterval(interval);
-  }, [reviews.length]);
+  //   return () => clearInterval(interval);
+  // }, [reviews.length]);
 
   if (!active || !reviews.length) return null
 
