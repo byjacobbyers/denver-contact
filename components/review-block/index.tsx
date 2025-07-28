@@ -70,27 +70,35 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
           <h2 className="text-3xl 2xl:text-4xl font-bold w-full text-left mb-8">{title || 'TESTIMONIALS'}</h2>
         </motion.div>
         {/* 
-          To better balance the buttons per row using flex-wrap, 
-          we can use justify-center and set a fixed basis for each button 
-          so that they wrap evenly and are centered. 
-          Optionally, you can use gap-x and gap-y for spacing.
+          Stacked avatar layout where avatars overlap but remain visible
         */}
-        <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-4 mb-8 w-full max-w-5xl mx-auto">
-          {reviews.map((review, idx) => (
-            <div
-              key={idx}
-              className="flex-shrink-0 flex-grow-0 basis-28 flex justify-center"
-            >
+        <div className="relative flex justify-center items-center mb-8 w-full max-w-5xl mx-auto h-20">
+          {reviews.map((review, idx) => {
+            const isSelected = selected === idx;
+            const distance = Math.abs(selected - idx);
+            const zIndex = reviews.length - distance;
+            const translateX = (idx - selected) * 40; // Offset each avatar
+            
+            return (
               <motion.div
+                key={idx}
+                className="absolute"
                 animate={{
-                  scale: selected === idx ? 1.05 : 1,
-                  borderColor: selected === idx ? 'hsl(var(--primary))' : 'transparent',
+                  scale: isSelected ? 1.1 : 0.9,
+                  x: translateX,
+                  zIndex: isSelected ? reviews.length + 1 : zIndex,
+                  opacity: distance <= 2 ? 1 : 0.6, // Fade out distant avatars
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
+                style={{
+                  zIndex: isSelected ? reviews.length + 1 : zIndex,
+                }}
               >
                 <Button
-                  variant={selected === idx ? 'default' : 'ghost'}
-                  className={`rounded-full p-1 border-2 transition-all w-18 h-18`}
+                  variant={isSelected ? 'default' : 'ghost'}
+                  className={`rounded-full p-1 border-2 transition-all w-18 h-18 ${
+                    isSelected ? 'border-primary shadow-lg' : 'border-transparent'
+                  }`}
                   onClick={() => setSelected(idx)}
                   aria-label={`Select review by ${review.name}`}
                 >
@@ -104,8 +112,8 @@ const ReviewBlock: React.FC<ReviewBlockType> = ({
                   </Avatar>
                 </Button>
               </motion.div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <AnimatePresence mode="wait">
           <motion.div
