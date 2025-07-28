@@ -88,11 +88,11 @@ const EventCarousel = () => {
         opts={{
           align: "start",
           loop: true,
-          dragFree: true,
         }}
         plugins={[
           Autoplay({
             delay: 4000,
+            //stopOnInteraction: false,
           }),
         ]}
         setApi={setApi}
