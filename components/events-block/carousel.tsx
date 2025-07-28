@@ -91,7 +91,7 @@ const EventCarousel = () => {
         }}
         plugins={[
           Autoplay({
-            delay: 4000,
+            delay: 8000,
             //stopOnInteraction: false,
           }),
         ]}
