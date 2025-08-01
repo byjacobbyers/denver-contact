@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     // Get the recipient email from environment variable or use a default
-    const recipientEmail = process.env.CONTACT_EMAIL || 'contact@denvercontactimprov.com';
+    const recipientEmail = 'byers.jacob@gmail.com';
 
     const { data, error } = await resend.emails.send({
       from: 'Denver Contact Improv <noreply@denvercontactimprov.com>',
