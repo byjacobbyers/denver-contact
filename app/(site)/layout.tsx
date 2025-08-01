@@ -64,6 +64,11 @@ export default async function RootLayout({
             <Script id="plausible-init" strategy="afterInteractive">
               {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
             </Script>
+            {/* reCAPTCHA v3 script */}
+            <Script
+              src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+              strategy="afterInteractive"
+            />
             {/* <CookieConsentBanner /> */}
           </Template>
           <Footer />

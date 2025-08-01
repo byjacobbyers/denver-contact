@@ -7,7 +7,31 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, message, isAnonymous } = body;
+    const { name, email, message, isAnonymous, recaptchaToken } = body;
+
+    // Verify reCAPTCHA token
+    if (!recaptchaToken) {
+      return Response.json({ error: 'reCAPTCHA token is required' }, { status: 400 });
+    }
+
+    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`
+    });
+
+    const recaptchaData = await recaptchaResponse.json();
+    
+    if (!recaptchaData.success) {
+      console.error('reCAPTCHA verification failed:', recaptchaData);
+      return Response.json({ error: 'reCAPTCHA verification failed' }, { status: 400 });
+    }
+
+    // Check if score is too low (likely a bot)
+    if (recaptchaData.score < 0.5) {
+      console.log('Bot detected - reCAPTCHA score:', recaptchaData.score);
+      return Response.json({ error: 'Bot detected' }, { status: 400 });
+    }
 
     // Validate required fields
     if (!message || message.trim().length === 0) {
@@ -30,11 +54,11 @@ export async function POST(request: Request) {
     }
 
     // Get the recipient email from environment variable or use a default
-    const recipientEmail = 'byers.jacob@gmail.com';
+    const recipientEmail = ['byers.jacob@gmail.com'];
 
     const { data, error } = await resend.emails.send({
       from: 'Denver Contact Improv <noreply@denvercontactimprov.com>',
-      to: [recipientEmail],
+      to: recipientEmail,
       subject: isAnonymous ? "Anonymous Contact Form Submission" : `Contact Form Submission from ${name}`,
       react: EmailTemplate({ 
         name: isAnonymous ? undefined : name,

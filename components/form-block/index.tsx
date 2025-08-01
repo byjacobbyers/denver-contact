@@ -71,6 +71,9 @@ const FormBlock: React.FC<any> = ({
     setSubmitStatus('idle')
 
     try {
+      // Get reCAPTCHA token
+      const token = await (window as any).grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'submit'})
+
       const response = await fetch('/api/send', {
         method: 'POST',
         headers: {
@@ -81,6 +84,7 @@ const FormBlock: React.FC<any> = ({
           email: formData.isAnonymous ? undefined : formData.email,
           message: formData.message,
           isAnonymous: formData.isAnonymous,
+          recaptchaToken: token,
         }),
       })
 
@@ -94,7 +98,14 @@ const FormBlock: React.FC<any> = ({
         })
         setErrors({})
       } else {
-        setSubmitStatus('error')
+        const errorData = await response.json()
+        if (errorData.error === 'Bot detected') {
+          setSubmitStatus('error')
+          // Show specific error for bot detection
+          setErrors({ message: 'Bot activity detected. Please try again.' })
+        } else {
+          setSubmitStatus('error')
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error)
