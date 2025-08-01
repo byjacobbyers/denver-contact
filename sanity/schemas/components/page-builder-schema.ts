@@ -18,6 +18,7 @@ const pageBuilder = defineField({
     { type: 'spacerBlock' },
     { type: 'dividerBlock' },
     { type: 'eventsBlock' },
+    { type: 'formBlock' },
 	],
 	components: {
 		input: PageBuilderInput,

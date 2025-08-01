@@ -67,12 +67,12 @@ export default function Header() {
           </div>
         </div>
     </header>
-    <div
+    {/* <div
       id='header-placeholder'
       style={{
         height: dimensions.height,
       }}
-    />
+    /> */}
     <motion.div
         initial={'closed'}
         animate={isOpen ? 'open' : 'closed'}

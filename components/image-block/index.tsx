@@ -44,7 +44,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
     >
       {fullScreen ? (
         <div
-          className="relative w-full overflow-hidden last:-mt-24"
+          className="relative w-full overflow-hidden"
           style={{ height: lockedHeight ?? `calc(${halfHeight ? '50vh' : '100vh'} - ${headerHeight}px)` }}
         >
           <div className="flex absolute inset-0 bg-black/50 z-10 items-center justify-center">

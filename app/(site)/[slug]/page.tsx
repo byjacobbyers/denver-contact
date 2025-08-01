@@ -59,9 +59,6 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
     const pageSeo = page?.seo || {}
     const globalSeo = global?.seo || {}
 
-    console.log('pageSeo', pageSeo)
-    console.log('globalSeo', globalSeo)
-
     const result = {
       noIndex: pageSeo?.noIndex ?? false,
       title: pageSeo?.metaTitle || globalSeo?.metaTitle || 'Page',
@@ -70,8 +67,6 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
         ? urlFor(pageSeo.shareGraphic.asset.url).width(1200).height(630).url()
         : urlFor(globalSeo.shareGraphic.asset.url).width(1200).height(630).url()
     }
-
-    console.log('result', result)
 
     return {
       generator: 'Next.js',

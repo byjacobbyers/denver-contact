@@ -26,6 +26,7 @@ import galleryBlock from './components/gallery-block-schema'
 import spacerBlock from './components/spacer-block-schema'
 import dividerBlock from './components/divider-block-schema'
 import eventsBlock from './components/event-block-schema'
+import formBlock from './components/form-block-schema'
 
 // objects
 import defaultImage from './objects/default-img-schema'
@@ -63,7 +64,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     spacerBlock,
     dividerBlock,
     eventsBlock,
-
+    formBlock,
+    
     // objects
     defaultImage,
     cta,

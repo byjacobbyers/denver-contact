@@ -16,6 +16,7 @@ import GalleryBlock from '@/components/gallery-block'
 import SpacerBlock from '@/components/spacer-block'
 import DividerBlock from '@/components/divider-block'
 import EventsBlock from '@/components/events-block'
+import FormBlock from '@/components/form-block'
 
 interface BodySerializers {
 	[key: string]: {
@@ -68,6 +69,10 @@ const bodySerializers: BodySerializers = {
   },
   eventsBlock: {
     component: EventsBlock,
+    wrapper: ({ children }) => <>{children}</>,
+  },
+  formBlock: {
+    component: FormBlock,
     wrapper: ({ children }) => <>{children}</>,
   },
 }
