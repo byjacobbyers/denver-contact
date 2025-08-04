@@ -10,6 +10,7 @@ export type PageType = {
 	slug: {
 		current: string
 	}
+	backgroundColor?: 'primary' | 'secondary'
 	sections: PageBuilderType
 	seo: SeoType
 }

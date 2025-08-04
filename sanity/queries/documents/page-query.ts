@@ -15,6 +15,7 @@ export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
   "slug": slug.current,
+  backgroundColor,
   seo {
     ...,
     shareGraphic {

@@ -37,6 +37,19 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      title: 'Background Color',
+      name: 'backgroundColor',
+      type: 'string',
+      group: 'page',
+      options: {
+        list: [
+          { title: 'Primary', value: 'primary' },
+          { title: 'Secondary', value: 'secondary' },
+        ],
+      },
+      initialValue: 'primary',
+    }),
+    defineField({
       name: 'sections',
       type: 'sections',
       group: 'page',
