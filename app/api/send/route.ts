@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     
     if (!recaptchaData.success) {
       console.error('reCAPTCHA verification failed:', recaptchaData);
-      console.error('reCAPTCHA error codes:', recaptchaData['error-codes']);
       return Response.json({ error: 'reCAPTCHA verification failed' }, { status: 400 });
     }
 
@@ -60,7 +59,6 @@ export async function POST(request: Request) {
     const { data, error } = await resend.emails.send({
       from: 'Denver Contact Improv <noreply@denvercontactimprov.com>',
       to: recipientEmail,
-      replyTo: isAnonymous ? undefined : email,
       subject: isAnonymous ? "Anonymous Contact Form Submission" : `Contact Form Submission from ${name}`,
       react: EmailTemplate({ 
         name: isAnonymous ? undefined : name,

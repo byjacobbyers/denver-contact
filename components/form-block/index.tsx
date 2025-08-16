@@ -2,7 +2,7 @@
 
 // Tools
 import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Script from 'next/script'
 
 // Types
@@ -29,16 +29,6 @@ interface FormBlockProps {
   content?: React.ReactNode;
 }
 
-// Extend Window interface for grecaptcha
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
-
 const FormBlock: React.FC<FormBlockProps> = ({
   active,
   componentIndex,
@@ -47,8 +37,6 @@ const FormBlock: React.FC<FormBlockProps> = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [recaptchaReady, setRecaptchaReady] = useState(false)
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -56,39 +44,6 @@ const FormBlock: React.FC<FormBlockProps> = ({
     isAnonymous: false,
   })
   const [errors, setErrors] = useState<Partial<FormData>>({})
-
-  // Initialize reCAPTCHA when script loads
-  useEffect(() => {
-    const initRecaptcha = () => {
-      if (typeof window !== 'undefined' && window.grecaptcha) {
-        window.grecaptcha.ready(() => {
-          setRecaptchaReady(true)
-          setRecaptchaError(null)
-        })
-      }
-    }
-
-    // Check if grecaptcha is already available
-    if (typeof window !== 'undefined' && window.grecaptcha) {
-      initRecaptcha()
-    } else {
-      // Wait for grecaptcha to be available
-      const checkRecaptcha = setInterval(() => {
-        if (typeof window !== 'undefined' && window.grecaptcha) {
-          clearInterval(checkRecaptcha)
-          initRecaptcha()
-        }
-      }, 100)
-
-      // Cleanup interval after 10 seconds
-      setTimeout(() => {
-        clearInterval(checkRecaptcha)
-        if (!recaptchaReady) {
-          setRecaptchaError('reCAPTCHA failed to load. This might be due to Brave Shields or other privacy extensions blocking the script.')
-        }
-      }, 10000)
-    }
-  }, [recaptchaReady])
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {}
@@ -119,22 +74,12 @@ const FormBlock: React.FC<FormBlockProps> = ({
     
     if (!validateForm()) return
 
-    if (!recaptchaReady) {
-      setRecaptchaError('reCAPTCHA is not ready. Please wait a moment and try again.')
-      return
-    }
-
     setIsSubmitting(true)
     setSubmitStatus('idle')
-    setRecaptchaError(null)
 
     try {
       // Get reCAPTCHA token
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-      if (!siteKey) {
-        throw new Error('reCAPTCHA site key is not configured')
-      }
-      const token = await window.grecaptcha.execute(siteKey, { action: "contact" })
+      const token = await (window as any).grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'submit'})
 
       const response = await fetch('/api/send', {
         method: 'POST',
@@ -172,10 +117,6 @@ const FormBlock: React.FC<FormBlockProps> = ({
     } catch (error) {
       console.error('Error submitting form:', error)
       setSubmitStatus('error')
-      // Check if it's a reCAPTCHA error
-      if (error instanceof Error && error.message.includes('grecaptcha')) {
-        setRecaptchaError('reCAPTCHA error occurred. This might be due to Brave Shields or other privacy extensions.')
-      }
     } finally {
       setIsSubmitting(false)
     }
@@ -287,9 +228,9 @@ const FormBlock: React.FC<FormBlockProps> = ({
               <Button 
                 type="submit" 
                 className="w-full"
-                disabled={isSubmitting || !recaptchaReady}
+                disabled={isSubmitting}
               >
-                {isSubmitting ? "Sending..." : !recaptchaReady ? "Loading..." : "Send Message"}
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
 
               {/* Status Messages */}
@@ -313,19 +254,6 @@ const FormBlock: React.FC<FormBlockProps> = ({
                 >
                   <p className="text-red-800 text-sm">
                     Sorry, there was an error sending your message. Please try again.
-                  </p>
-                </motion.div>
-              )}
-
-              {/* reCAPTCHA Error Message */}
-              {recaptchaError && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-yellow-50 border border-yellow-200 rounded-md"
-                >
-                  <p className="text-yellow-800 text-sm">
-                    {recaptchaError}
                   </p>
                 </motion.div>
               )}
