@@ -159,6 +159,16 @@
     letter-spacing: var(--tracking-normal);
     font-family: var(--font-sans);
   }
+  
+  /* Hide reCAPTCHA badge by default */
+  .grecaptcha-badge {
+    visibility: hidden !important;
+  }
+  
+  /* Show reCAPTCHA badge only on pages with forms */
+  .show-recaptcha .grecaptcha-badge {
+    visibility: visible !important;
+  }
   h1 {
     @apply text-4xl font-bold tracking-tight pb-4;
   }

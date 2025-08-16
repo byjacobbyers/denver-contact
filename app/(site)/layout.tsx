@@ -11,6 +11,7 @@ import { draftMode } from "next/headers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { AppProvider } from '@/context/app';
+import RecaptchaManager from '@/components/recaptcha-manager';
 // import { CookieConsentBanner } from '@/components/cookie-consent';
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen antialiased font-sans">
         <AppProvider>
+          <RecaptchaManager />
           <Header />
           <Template>
             {children}
