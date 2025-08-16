@@ -39,6 +39,15 @@ export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
         }
       }
     },
+    _type == 'heroMural' => {
+      ...,
+      image {
+        ${imageQuery}
+      },
+      frontImage {
+        ${imageQuery}
+      },
+    },
     _type == 'ctaBlock' => {
       ...,
       cta {

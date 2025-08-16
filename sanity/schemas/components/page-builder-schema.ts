@@ -8,6 +8,7 @@ const pageBuilder = defineField({
 	group: 'pagebuilder',
 	of: [
 		{ type: 'heroBlock'},
+		{ type: 'heroMural' },
 		{ type: 'ctaBlock' },
 		{ type: 'columnBlock' },
 		{ type: 'reviewBlock' },

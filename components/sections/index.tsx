@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 
 // blocks
 import HeroBlock from '@/components/hero-block'
+import HeroMural from '@/components/hero-mural'
 import CtaBlock from '@/components/cta-block'
 import ColumnBlock from '@/components/column-block'
 import ReviewBlock from '@/components/review-block'
@@ -29,6 +30,10 @@ interface BodySerializers {
 const bodySerializers: BodySerializers = {
 	heroBlock: {
 		component: HeroBlock,
+		wrapper: ({ children }) => <>{children}</>,
+	},
+	heroMural: {
+		component: HeroMural,
 		wrapper: ({ children }) => <>{children}</>,
 	},
 	ctaBlock: {

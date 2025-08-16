@@ -27,6 +27,7 @@ import spacerBlock from './components/spacer-block-schema'
 import dividerBlock from './components/divider-block-schema'
 import eventsBlock from './components/event-block-schema'
 import formBlock from './components/form-block-schema'
+import heroMural from './components/hero-mural-schema'
 
 // objects
 import defaultImage from './objects/default-img-schema'
@@ -65,6 +66,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     dividerBlock,
     eventsBlock,
     formBlock,
+    heroMural,
     
     // objects
     defaultImage,
