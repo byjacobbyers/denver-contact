@@ -11,9 +11,10 @@ import { EventType } from "@/types/documents/event-type"
 // Components
 import SanityImage from "@/components/sanity-image"
 import Sections from "@/components/sections"
+import { Badge } from "@/components/ui/badge"
 
 export default function EventSingle({ event }: { event: EventType }) {
-  const { title, image, startDate, endDate, location, sections, timeString } = event
+  const { title, image, startDate, endDate, location, sections, timeString, soldOut } = event
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -51,6 +52,13 @@ export default function EventSingle({ event }: { event: EventType }) {
           transition={{ duration: 0.5 }}
         >
           <h1 className="lg:text-7xl mb-6">{title}</h1>
+          {soldOut && (
+            <div className="mb-6">
+              <Badge variant="destructive" className="text-lg px-6 py-3">
+                Sold Out
+              </Badge>
+            </div>
+          )}
           <div className="flex flex-col gap-2 text-xl">
             <div>
               {startDate && (

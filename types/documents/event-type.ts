@@ -14,6 +14,7 @@ export interface EventType {
   endDate?: string
   timeString?: string
   eventType?: string
+  soldOut?: boolean
   location?: string
   sections: any
   guestTeachers?: PersonType[]

@@ -60,6 +60,14 @@ export default defineType({
       },
     }),
     defineField({
+      title: 'Sold Out',
+      name: 'soldOut',
+      type: 'boolean',
+      group: 'event',
+      description: 'Mark this event as sold out to display a notice or disable registration.',
+      initialValue: false,
+    }),
+    defineField({
       title: 'Location',
       name: 'location',
       type: 'string',

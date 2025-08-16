@@ -17,6 +17,7 @@ export const eventsQuery = groq`
     endDate,
     timeString,
     eventType,
+    soldOut,
     location,
     content,
     "flyer": flyer.asset->{
@@ -49,6 +50,7 @@ export const eventQuery = groq`
     endDate,
     timeString,
     eventType,
+    soldOut,
     location,
     "flyer": flyer.asset->{
       url,

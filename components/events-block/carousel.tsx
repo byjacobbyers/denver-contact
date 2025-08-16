@@ -108,9 +108,16 @@ const EventCarousel = () => {
                   </CardHeader>
                   <CardContent className="px-4">
                     <div className="flex flex-col gap-2">
-                      <Badge variant="default" className="w-fit mb-2">
-                        {event.eventType}
-                      </Badge>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="default" className="w-fit">
+                          {event.eventType}
+                        </Badge>
+                        {event.soldOut && (
+                          <Badge variant="destructive" className="w-fit">
+                            Sold Out
+                          </Badge>
+                        )}
+                      </div>
                       <h3 className="text-xl font-semibold line-clamp-2">
                         {event.title}
                       </h3>
