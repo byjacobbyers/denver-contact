@@ -2,7 +2,8 @@
 
 // Tools
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import Script from 'next/script'
 
 // Types
 
@@ -11,7 +12,6 @@ import SimpleText from '@/components/simple-text'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import Route from '@/components/route'
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 
@@ -22,7 +22,24 @@ interface FormData {
   isAnonymous: boolean;
 }
 
-const FormBlock: React.FC<any> = ({
+interface FormBlockProps {
+  active?: boolean;
+  componentIndex?: number;
+  anchor?: string;
+  content?: React.ReactNode;
+}
+
+// Extend Window interface for grecaptcha
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+const FormBlock: React.FC<FormBlockProps> = ({
   active,
   componentIndex,
   anchor,
@@ -30,6 +47,8 @@ const FormBlock: React.FC<any> = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [recaptchaReady, setRecaptchaReady] = useState(false)
+  const [recaptchaError, setRecaptchaError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -37,6 +56,39 @@ const FormBlock: React.FC<any> = ({
     isAnonymous: false,
   })
   const [errors, setErrors] = useState<Partial<FormData>>({})
+
+  // Initialize reCAPTCHA when script loads
+  useEffect(() => {
+    const initRecaptcha = () => {
+      if (typeof window !== 'undefined' && window.grecaptcha) {
+        window.grecaptcha.ready(() => {
+          setRecaptchaReady(true)
+          setRecaptchaError(null)
+        })
+      }
+    }
+
+    // Check if grecaptcha is already available
+    if (typeof window !== 'undefined' && window.grecaptcha) {
+      initRecaptcha()
+    } else {
+      // Wait for grecaptcha to be available
+      const checkRecaptcha = setInterval(() => {
+        if (typeof window !== 'undefined' && window.grecaptcha) {
+          clearInterval(checkRecaptcha)
+          initRecaptcha()
+        }
+      }, 100)
+
+      // Cleanup interval after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkRecaptcha)
+        if (!recaptchaReady) {
+          setRecaptchaError('reCAPTCHA failed to load. This might be due to Brave Shields or other privacy extensions blocking the script.')
+        }
+      }, 10000)
+    }
+  }, [recaptchaReady])
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {}
@@ -67,12 +119,22 @@ const FormBlock: React.FC<any> = ({
     
     if (!validateForm()) return
 
+    if (!recaptchaReady) {
+      setRecaptchaError('reCAPTCHA is not ready. Please wait a moment and try again.')
+      return
+    }
+
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setRecaptchaError(null)
 
     try {
       // Get reCAPTCHA token
-      const token = await (window as any).grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'submit'})
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+      if (!siteKey) {
+        throw new Error('reCAPTCHA site key is not configured')
+      }
+      const token = await window.grecaptcha.execute(siteKey, { action: "contact" })
 
       const response = await fetch('/api/send', {
         method: 'POST',
@@ -110,6 +172,10 @@ const FormBlock: React.FC<any> = ({
     } catch (error) {
       console.error('Error submitting form:', error)
       setSubmitStatus('error')
+      // Check if it's a reCAPTCHA error
+      if (error instanceof Error && error.message.includes('grecaptcha')) {
+        setRecaptchaError('reCAPTCHA error occurred. This might be due to Brave Shields or other privacy extensions.')
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -126,10 +192,17 @@ const FormBlock: React.FC<any> = ({
   if (!active) return null
 
   return (
-    <section
-      id={`${anchor ? anchor : "form-" + componentIndex}`}
-      className="form-block w-full flex justify-center px-5 py-16 lg:py-24 bg-accent"
-    >
+    <>
+      {/* Load reCAPTCHA script only for this form */}
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="afterInteractive"
+      />
+      
+      <section
+        id={`${anchor ? anchor : "form-" + componentIndex}`}
+        className="form-block w-full flex justify-center px-5 py-16 lg:py-24 bg-accent"
+      >
       <div className={`container flex flex-col justify-center`}>
         <motion.div
           className={`w-full max-w-2xl mx-auto`}
@@ -214,9 +287,9 @@ const FormBlock: React.FC<any> = ({
               <Button 
                 type="submit" 
                 className="w-full"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !recaptchaReady}
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Sending..." : !recaptchaReady ? "Loading..." : "Send Message"}
               </Button>
 
               {/* Status Messages */}
@@ -243,11 +316,25 @@ const FormBlock: React.FC<any> = ({
                   </p>
                 </motion.div>
               )}
+
+              {/* reCAPTCHA Error Message */}
+              {recaptchaError && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-yellow-50 border border-yellow-200 rounded-md"
+                >
+                  <p className="text-yellow-800 text-sm">
+                    {recaptchaError}
+                  </p>
+                </motion.div>
+              )}
             </form>
           </div>
         </motion.div>
       </div>
     </section>
+    </>
   )
 }
 
