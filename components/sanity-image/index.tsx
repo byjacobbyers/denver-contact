@@ -39,7 +39,7 @@ export default function SanityImage({
   componentIndex=1,
   shadow=false,
   role='none',
-  sizes='(max-width: 600px) 90vw, (max-width: 1200px) 60vw, 500px',
+  sizes='(max-width: 600px) 90vw, (max-width: 1200px) 60vw, (max-width: 1920px) 80vw, 1200px',
   className
 }: SanityImageProps) {
 
@@ -67,8 +67,8 @@ export default function SanityImage({
   let imageUrlBuilder = urlFor(imageUrl)
     .width(width)
     .height(height)
-    .dpr(2)
-    .quality(100)
+    .dpr(3) // Increased DPR for better quality on high-DPI displays
+    .quality(95) // Slightly reduced quality for better performance while maintaining visual quality
     .auto('format')
     .fit('crop');
 

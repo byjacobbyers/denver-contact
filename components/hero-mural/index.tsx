@@ -59,8 +59,8 @@ const HeroMural: React.FC<HeroMuralType> = ({
               <SanityImage
                 source={image}
                 alt={image?.alt || 'Hero mural background'}
-                width={1920}
-                height={1080}
+                width={2560}
+                height={1440}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -98,8 +98,8 @@ const HeroMural: React.FC<HeroMuralType> = ({
               <SanityImage
                 source={frontImage}
                 alt={frontImage?.alt || 'Hero mural front image'}
-                width={1920}
-                height={1080}
+                width={2560}
+                height={1440}
                 className="w-full h-full object-cover"
               />
             </div>

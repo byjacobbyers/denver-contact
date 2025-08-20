@@ -32,8 +32,8 @@ const GalleryBlock: React.FC<GalleryBlockType> = ({
               <SanityImage
                 source={image}
                 alt={image?.alt || `Gallery image ${index + 1}`}
-                width={1920}
-                height={1080}
+                width={2560}
+                height={1440}
                 className="w-full h-full object-cover"
               />
             </div>

@@ -35,8 +35,8 @@ export default function EventSingle({ event }: { event: EventType }) {
             <SanityImage
               source={image}
               alt={image?.alt || 'Event image'}
-              width={1920}
-              height={isMobile ? 1200 : 600}
+              width={2560}
+              height={isMobile ? 1440 : 720}
               className="w-full h-full object-cover"
             />
           </div>
