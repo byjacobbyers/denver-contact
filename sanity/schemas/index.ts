@@ -10,6 +10,7 @@ import navigation from './documents/navigation-schema'
 import review from './documents/review-schema'
 import person from './documents/person-schema'
 import event from './documents/event-schema'
+import announcement from './documents/announcement-schema'
 
 // components
 import sections from './components/page-builder-schema'
@@ -49,6 +50,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     review,
     person,
     event,
+    announcement,
 
     // components
     sections,

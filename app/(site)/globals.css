@@ -190,6 +190,9 @@
   p {
     @apply text-lg min-h-[28px];
   }
+  .announcement p {
+    @apply text-sm min-h-[14px];
+  }
   ol {
     @apply text-lg list-decimal pl-6 pb-2;
   }

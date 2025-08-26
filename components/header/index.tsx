@@ -9,6 +9,7 @@ import MenuButton from "@/components/header/menu-button"
 import MobileNav from "@/components/navigation/mobile"
 import type { NavigationType } from "@/types/documents/navigation-type"
 import { motion, useCycle } from "framer-motion"
+import Announcement from "../announcement"
 
 
 interface Dimension {
@@ -48,6 +49,7 @@ export default function Header() {
 
   return (
     <>
+    <Announcement />
     <header ref={targetRef} className="sticky top-0 z-50 w-full border-b-4 border-black bg-background px-5">
         <div className="flex h-16 items-center justify-between">
           <Link href="/">
