@@ -29,7 +29,7 @@ export default function EventSingle({ event }: { event: EventType }) {
   return (
     <article className="flex min-h-screen flex-col items-center gap-y-24 pb-12 lg:pb-24">
       {/* Hero Image Section */}
-      <section className="w-full -mt-24">
+      <section className="w-full">
         {image && (
           <div className="w-full">
             <SanityImage
