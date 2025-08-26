@@ -35,7 +35,7 @@ export default function Announcement() {
 
   const announcementContent = (
     <motion.div
-      className='announcement bg-primary text-primary-foreground px-4 py-2 text-center'
+      className='announcement relative z-40 bg-primary text-primary-foreground px-4 py-2 text-center'
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

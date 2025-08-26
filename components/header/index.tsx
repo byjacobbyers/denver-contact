@@ -43,6 +43,20 @@ export default function Header() {
 		}
 	}, [])
 
+  // Prevent body scrolling when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   const closeMenu = () => {
     toggleDropdown();
   };
@@ -76,27 +90,26 @@ export default function Header() {
       }}
     /> */}
     <motion.div
-        initial={'closed'}
-        animate={isOpen ? 'open' : 'closed'}
-        transition={{ duration: 1, ease: [0.83, 0, 0.17, 1] }}
-        variants={{
-          closed: {
-            y: '-100%',
-            opacity: 0,
-          },
-          open: {
-            y: 0,
-            opacity: 1,
-          },
-        }}
-        style={{
-          paddingTop: dimensions.height,
-        }}
-        className='fixed left-0 top-0 z-30 flex h-screen w-full flex-col items-center overflow-scroll bg-background px-5 text-center xl:hidden'
-      >
-        <hr className='border-thin w-full border-white' />
-        {navigation && <MobileNav data={navigation} closeMenu={closeMenu} />}
-      </motion.div>
+      initial={'closed'}
+      animate={isOpen ? 'open' : 'closed'}
+      transition={{ duration: 1, ease: [0.83, 0, 0.17, 1] }}
+      variants={{
+        closed: {
+          y: '-100%',
+          opacity: 0,
+        },
+        open: {
+          y: 0,
+          opacity: 1,
+        },
+      }}
+      style={{
+        paddingTop: dimensions.height,
+      }}
+      className='fixed left-0 top-0 z-30 flex h-screen w-screen flex-col items-center overflow-scroll bg-background px-5 text-center xl:hidden'
+    >
+      {navigation && <MobileNav data={navigation} closeMenu={closeMenu} />}
+    </motion.div>
     </>
   )
 }
