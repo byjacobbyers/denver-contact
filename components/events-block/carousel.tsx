@@ -38,7 +38,7 @@ const EventCarousel = () => {
       try {
         const data = await client.fetch(eventsQuery);
 
-        // Filter out past events and sort by start date
+        // Filter out past events and sort by start date DESCENDING
         const now = new Date();
         const upcomingEvents = data
           .filter((event: EventType) => {
@@ -49,7 +49,7 @@ const EventCarousel = () => {
             return endDate >= now;
           })
           .sort((a: EventType, b: EventType) => 
-            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+            new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
           );
 
         setEvents(upcomingEvents);
