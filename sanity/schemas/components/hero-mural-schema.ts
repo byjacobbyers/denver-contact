@@ -43,6 +43,11 @@ const heroMural = defineType({
       type: "string",
       description: 'This text appears in front of the group (e.g. "Contact Improv").',
     }),
+    defineField({
+      title: "Mobile Image",
+      name: "mobileImage",
+      type: "defaultImage",
+    }),
   ],
   preview: {
     select: {

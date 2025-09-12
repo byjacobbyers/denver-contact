@@ -8,4 +8,5 @@ export type HeroMuralType = {
 	behindText?: string
 	frontImage?: DefaultImageType
 	frontText?: string
+	mobileImage?: DefaultImageType
 }

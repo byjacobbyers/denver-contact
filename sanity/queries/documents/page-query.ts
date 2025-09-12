@@ -47,6 +47,9 @@ export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
       frontImage {
         ${imageQuery}
       },
+      mobileImage {
+        ${imageQuery}
+      }
     },
     _type == 'ctaBlock' => {
       ...,

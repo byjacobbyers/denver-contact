@@ -19,6 +19,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
   behindText,
   frontImage,
   frontText,
+  mobileImage,
 }) => {
   const { headerHeight } = useHeaderHeight()
 
@@ -53,9 +54,9 @@ const HeroMural: React.FC<HeroMuralType> = ({
             duration: 1.5,
           }}
         >
-          {/* Background Image */}
+          {/* Background Image - Hidden on mobile, shown on tablet landscape and up */}
           {image && (
-            <div className="w-full h-full absolute inset-0 z-0">
+            <div className="w-full h-full absolute inset-0 z-0 hidden md:block">
               <SanityImage
                 source={image}
                 alt={image?.alt || 'Hero mural background'}
@@ -69,7 +70,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
           {/* Behind Text - Centered and positioned 25% from top */}
           {behindText && (
             <motion.h1
-              className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center !font-extrablack text-foreground select-none pointer-events-none w-screen max-w-none"
+              className="absolute top-[calc(50%-2rem)] sm:top-[calc(50%-3rem)] md:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center !font-extrablack text-foreground select-none pointer-events-none w-screen max-w-none"
               style={{
                 fontSize: 'clamp(4rem, 20vw, 40rem)',
                 textShadow: `
@@ -92,9 +93,9 @@ const HeroMural: React.FC<HeroMuralType> = ({
             </motion.h1>
           )}
           
-          {/* Front Image - Stacked on top at same dimensions as background */}
+          {/* Front Image - Hidden on mobile, shown on tablet landscape and up */}
           {frontImage && (
-            <div className="w-full h-full absolute inset-0 z-20">
+            <div className="w-full h-full absolute inset-0 z-20 hidden md:block">
               <SanityImage
                 source={frontImage}
                 alt={frontImage?.alt || 'Hero mural front image'}
@@ -108,7 +109,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
           {/* Front Text - Centered and positioned 10rem from bottom */}
           {frontText && (
             <motion.h2
-              className="absolute bottom-20 left-1/2 -translate-x-1/2 z-30 w-full text-center font-bold text-white text-5xl md:text-6xl lg:text-8xl xl:text-9xl drop-shadow-md"
+              className="absolute bottom-[calc(50%-5rem)] md:bottom-20 left-1/2 -translate-x-1/2 z-30 w-full text-center font-bold text-white text-5xl md:text-6xl lg:text-8xl xl:text-9xl drop-shadow-md text-shadow-lg"
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -119,6 +120,19 @@ const HeroMural: React.FC<HeroMuralType> = ({
             >
               {frontText}
             </motion.h2>
+          )}
+
+          {/* Mobile Image - Shown only on mobile devices */}
+          {mobileImage && (
+            <div className="w-full h-full absolute inset-0 z-0 block md:hidden">
+              <SanityImage
+                source={mobileImage}
+                alt={mobileImage?.alt || 'Hero mural mobile image'}
+                width={mobileImage?.asset.metadata.dimensions.width}
+                height={mobileImage?.asset.metadata.dimensions.height}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
         </motion.div>
       </div>
