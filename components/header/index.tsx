@@ -106,7 +106,7 @@ export default function Header() {
       style={{
         paddingTop: dimensions.height,
       }}
-      className='fixed left-0 top-0 z-30 flex h-screen w-screen flex-col items-center overflow-scroll bg-background px-5 text-center xl:hidden'
+      className='fixed left-0 top-0 z-40 flex h-screen w-screen flex-col items-center overflow-scroll bg-background px-5 text-center xl:hidden'
     >
       {navigation && <MobileNav data={navigation} closeMenu={closeMenu} />}
     </motion.div>
