@@ -5,6 +5,7 @@ export const routeQuery = groq`
   title,
   blank,
   pageRoute->{
+    _type,
     slug {
       current
     }

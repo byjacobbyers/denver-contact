@@ -24,8 +24,12 @@ const Route: React.FC<RouteProps> = ({ data, className, children }) => {
 	}
 
 	if (data?.pageRoute) {
+		const href = data.pageRoute._type === 'event' 
+			? `/events/${data.pageRoute.slug.current}`
+			: `/${data.pageRoute.slug.current}`
+		
 		return (
-			<Link href={`/${data.pageRoute.slug.current}`} {...commonProps}>
+			<Link href={href} {...commonProps}>
 				{children}
 			</Link>
 		)
