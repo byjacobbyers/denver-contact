@@ -70,7 +70,7 @@ export default function SanityImage({
     .dpr(3) // Increased DPR for better quality on high-DPI displays
     .quality(95) // Slightly reduced quality for better performance while maintaining visual quality
     .auto('format')
-    .fit('crop');
+    .fit('scale');
 
   if (source.hotspot) {
     imageUrlBuilder = imageUrlBuilder.focalPoint(source.hotspot.x, source.hotspot.y);
