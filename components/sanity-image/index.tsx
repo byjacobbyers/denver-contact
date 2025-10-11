@@ -69,11 +69,15 @@ export default function SanityImage({
     .height(height)
     .dpr(3) // Increased DPR for better quality on high-DPI displays
     .quality(95) // Slightly reduced quality for better performance while maintaining visual quality
-    .auto('format')
-    .fit('scale');
+    .auto('format');
 
+  // Use crop fit mode when hotspot is present to focus on the area without stretching
   if (source.hotspot) {
-    imageUrlBuilder = imageUrlBuilder.focalPoint(source.hotspot.x, source.hotspot.y);
+    imageUrlBuilder = imageUrlBuilder
+      .fit('crop')
+      .focalPoint(source.hotspot.x, source.hotspot.y);
+  } else {
+    imageUrlBuilder = imageUrlBuilder.fit('scale');
   }
 
   const imageUrlOptimized = imageUrlBuilder.url();
