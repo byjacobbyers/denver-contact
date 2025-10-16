@@ -134,8 +134,8 @@ const HeroBlock: React.FC<HeroBlockType> = ({
                 <SanityImage
                   source={image}
                   alt={image?.alt || 'Fallback image'}
-                  width={700}
-                  height={440}
+                  width={image?.asset.metadata.dimensions.width || 700}
+                  height={image?.asset.metadata.dimensions.height || 440}
                   componentIndex={componentIndex}
                   className='object-cover object-center w-full h-auto'
                 />
