@@ -67,7 +67,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       openGraph: {
         title: result.title,
         description: result.description,
-        url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
+        url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}events/${resolvedParams.slug}`),
         siteName: 'Denver Contact Improv',
         images: [
           {
@@ -83,6 +83,9 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
         title: result.title,
         description: result.description,
         images: [result.image],
+      },
+      alternates: {
+        canonical: `/events/${resolvedParams.slug}`,
       },
     }
   } catch (error) {
