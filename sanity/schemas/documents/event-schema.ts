@@ -149,9 +149,16 @@ export default defineType({
       startDate: 'startDate',
     },
     prepare({ title, startDate }) {
+      let formattedDate = 'No date set'
+      if (startDate) {
+        // Parse date string (YYYY-MM-DD) as local date to avoid timezone issues
+        const [year, month, day] = startDate.split('-').map(Number)
+        const date = new Date(year, month - 1, day) // month is 0-indexed
+        formattedDate = date.toLocaleDateString()
+      }
       return {
         title,
-        subtitle: startDate ? new Date(startDate).toLocaleDateString() : 'No date set',
+        subtitle: formattedDate,
       }
     },
   },
