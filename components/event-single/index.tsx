@@ -2,7 +2,7 @@
 
 // Tools
 import { motion } from "framer-motion"
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 
 // Types
@@ -12,6 +12,12 @@ import { EventType } from "@/types/documents/event-type"
 import SanityImage from "@/components/sanity-image"
 import Sections from "@/components/sections"
 import { Badge } from "@/components/ui/badge"
+
+const parseSanityDate = (dateStr: string) => {
+  // Parse date string (YYYY-MM-DD) as local date to avoid timezone issues
+  const [year, month, day] = dateStr.split('-').map(Number)
+  return new Date(year, month - 1, day) // month is 0-indexed
+}
 
 export default function EventSingle({ event }: { event: EventType }) {
   const { title, image, startDate, endDate, location, sections, timeString, soldOut } = event
@@ -63,8 +69,8 @@ export default function EventSingle({ event }: { event: EventType }) {
             <div>
               {startDate && (
                 <p>
-                  {format(parseISO(startDate), 'MMMM d, yyyy')}
-                  {endDate && startDate !== endDate && ` - ${format(parseISO(endDate), 'MMMM d, yyyy')}`}
+                  {format(parseSanityDate(startDate), 'MMMM d, yyyy')}
+                  {endDate && startDate !== endDate && ` - ${format(parseSanityDate(endDate), 'MMMM d, yyyy')}`}
                 </p>
               )}
             </div>

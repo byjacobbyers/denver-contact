@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { isMobile } from 'react-device-detect';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { client } from "@/sanity/lib/client";
 import { eventsQuery } from "@/sanity/queries/documents/event-query";
 import Link from "next/link";
@@ -26,7 +26,11 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/sanity-image";
 
-const parseSanityDate = (dateStr: string) => parseISO(dateStr + 'T12:00:00');
+const parseSanityDate = (dateStr: string) => {
+  // Parse date string (YYYY-MM-DD) as local date to avoid timezone issues
+  const [year, month, day] = dateStr.split('-').map(Number)
+  return new Date(year, month - 1, day) // month is 0-indexed
+};
 
 const EventCarousel = () => {
   const [events, setEvents] = useState<EventType[]>([]);
@@ -39,17 +43,19 @@ const EventCarousel = () => {
         const data = await client.fetch(eventsQuery);
 
         // Filter out past events and sort by start date DESCENDING
+        // Only hide events when today is the day AFTER the end date
         const now = new Date();
-        now.setHours(0, 0, 0, 0); // Set to start of today to include events happening today
+        now.setHours(0, 0, 0, 0); // Set to start of today
+        
         const upcomingEvents = data
           .filter((event: EventType) => {
-            // Show event if now is before or equal to the end date (or if no endDate, use startDate)
-            const endDate = event.endDate ? new Date(event.endDate) : new Date(event.startDate);
-            endDate.setHours(0, 0, 0, 0); // Set to start of day for proper comparison
+            // Use parseSanityDate to avoid timezone issues
+            const endDate = event.endDate ? parseSanityDate(event.endDate) : parseSanityDate(event.startDate);
+            // Show event if today is <= end date (hide only if today > end date)
             return endDate >= now;
           })
           .sort((a: EventType, b: EventType) => 
-            new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+            parseSanityDate(b.startDate).getTime() - parseSanityDate(a.startDate).getTime()
           );
 
         setEvents(upcomingEvents);
