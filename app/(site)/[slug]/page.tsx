@@ -13,6 +13,7 @@ import { SiteQuery } from '@/sanity/queries/documents/site-query'
 
 // Components
 import Page from "@/components/page-single"
+import TestimonialsGrid from "@/components/testimonials-grid"
 import { urlFor } from "@/components/sanity-image/url"
 
 export async function generateStaticParams() {
@@ -125,15 +126,23 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export default async function SinglePage({ params }: { params: Promise<QueryParams> }) {
   try {
+    const resolvedParams = await params
     const { data: page } = await sanityFetch({
       query: pageQuery,
-      params: await params,
+      params: { slug: resolvedParams.slug },
     })
 
-
-    
     if (!page) {
       return notFound()
+    }
+
+    // Render testimonials grid for testimonials page
+    if (resolvedParams.slug === 'testimonials') {
+      return (
+        <main className="flex min-h-screen flex-col items-center">
+          <TestimonialsGrid />
+        </main>
+      )
     }
 
     return <Page page={page} key={page._id} />

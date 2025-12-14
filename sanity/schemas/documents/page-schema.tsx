@@ -55,6 +55,10 @@ export default defineType({
       group: 'page',
       title: 'Page sections',
       description: 'Add, edit, and reorder sections',
+      hidden: ({ document }) => {
+        const slug = document?.slug as { current?: string } | undefined
+        return slug?.current === 'testimonials'
+      },
     }),
     defineField({
       title: 'SEO / Share Settings',
