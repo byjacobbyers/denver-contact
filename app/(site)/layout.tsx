@@ -6,7 +6,8 @@ import Template from "./template"
 import Script from 'next/script';
 import { SanityLive } from "@/sanity/lib/live";
 import { DisableDraftMode } from "@/components/disable-draftmode";
-import { VisualEditing } from "next-sanity";
+// VisualEditing is available in @sanity/visual-editing
+// import { VisualEditing } from '@sanity/visual-editing'
 import { draftMode } from "next/headers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -53,7 +54,7 @@ export default async function RootLayout({
             {(await draftMode()).isEnabled && (
               <>
                 <DisableDraftMode />
-                <VisualEditing />
+                {/* <VisualEditing /> */}
               </>
             )}
             <Script
