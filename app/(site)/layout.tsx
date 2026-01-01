@@ -50,9 +50,9 @@ export default async function RootLayout({
           <Header />
           <Template>
             {children}
-            <SanityLive />
             {(await draftMode()).isEnabled && (
               <>
+                <SanityLive />
                 <DisableDraftMode />
                 {/* <VisualEditing /> */}
               </>
