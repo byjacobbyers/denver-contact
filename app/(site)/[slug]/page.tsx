@@ -15,6 +15,8 @@ import { SiteQuery } from '@/sanity/queries/documents/site-query'
 import Page from "@/components/page-single"
 import TestimonialsGrid from "@/components/testimonials-grid"
 import { urlFor } from "@/components/sanity-image/url"
+import Script from 'next/script'
+import { generateWebPageJsonLd, generateFAQJsonLd } from '@/lib/seo'
 
 export async function generateStaticParams() {
   try {
@@ -127,6 +129,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 export default async function SinglePage({ params }: { params: Promise<QueryParams> }) {
   try {
     const resolvedParams = await params
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
     const { data: page } = await sanityFetch({
       query: pageQuery,
       params: { slug: resolvedParams.slug },
@@ -136,16 +139,54 @@ export default async function SinglePage({ params }: { params: Promise<QueryPara
       return notFound()
     }
 
+    // Generate JSON-LD schemas
+    const pageUrl = `/${resolvedParams.slug}`
+    const pageSeo = page?.seo || {}
+    const schemas = []
+
+    // WebPage schema
+    schemas.push(generateWebPageJsonLd({
+      title: page.title,
+      description: pageSeo.metaDesc,
+      url: pageUrl,
+      seo: pageSeo,
+      _updatedAt: page._updatedAt,
+    }))
+
+    // FAQ schema (if page has FAQ blocks)
+    const faqBlocks = page.sections?.filter((section: any) => section._type === 'faqBlock' && section.active) || []
+    const allFaqs = faqBlocks.flatMap((block: any) => block.faqs || [])
+    if (allFaqs.length > 0) {
+      const faqSchema = generateFAQJsonLd(allFaqs)
+      if (faqSchema) schemas.push(faqSchema)
+    }
+
     // Render testimonials grid for testimonials page
     if (resolvedParams.slug === 'testimonials') {
       return (
-        <main className="flex min-h-screen flex-col items-center">
-          <TestimonialsGrid />
-        </main>
+        <>
+          <Script
+            id="page-jsonld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+          />
+          <main className="flex min-h-screen flex-col items-center">
+            <TestimonialsGrid />
+          </main>
+        </>
       )
     }
 
-    return <Page page={page} key={page._id} />
+    return (
+      <>
+        <Script
+          id="page-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+        />
+        <Page page={page} key={page._id} />
+      </>
+    )
   } catch (error) {
     console.error('Error fetching page data:', error)
     return notFound()

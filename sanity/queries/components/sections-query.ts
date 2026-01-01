@@ -92,6 +92,13 @@ export const sectionsQuery = groq`
       images[] {
         ${imageQuery}
       }
+    },
+    _type == 'faqBlock' => {
+      ...,
+      faqs[] {
+        question,
+        answer
+      }
     }
   }
 `

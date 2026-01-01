@@ -12,6 +12,8 @@ import { SiteQuery } from '@/sanity/queries/documents/site-query'
 // Components
 import EventSingle from "@/components/event-single"
 import { urlFor } from "@/components/sanity-image/url"
+import Script from 'next/script'
+import { generateEventJsonLd, generateFAQJsonLd } from '@/lib/seo'
 
 export async function generateStaticParams() {
   try {
@@ -109,7 +111,53 @@ export default async function EventPage({ params }: { params: Promise<QueryParam
       return notFound()
     }
 
-    return <EventSingle event={event} key={event._id} />
+    // Generate JSON-LD schemas
+    const schemas = []
+    const eventUrl = `/events/${resolvedParams.slug}`
+    
+    // Parse dates for Event schema
+    const parseSanityDate = (dateStr: string) => {
+      const [year, month, day] = dateStr.split('-').map(Number)
+      return new Date(year, month - 1, day)
+    }
+
+    // Event schema
+    if (event.startDate) {
+      const startDate = parseSanityDate(event.startDate).toISOString()
+      const endDate = event.endDate ? parseSanityDate(event.endDate).toISOString() : undefined
+      
+      schemas.push(generateEventJsonLd({
+        title: event.title,
+        description: event.seo?.metaDesc,
+        url: eventUrl,
+        startDate,
+        endDate,
+        location: event.location,
+        image: event.image,
+        _updatedAt: event._updatedAt,
+      }))
+    }
+
+    // FAQ schema (if event has FAQ blocks in sections)
+    const faqBlocks = event.sections?.filter((section: any) => section._type === 'faqBlock' && section.active) || []
+    const allFaqs = faqBlocks.flatMap((block: any) => block.faqs || [])
+    if (allFaqs.length > 0) {
+      const faqSchema = generateFAQJsonLd(allFaqs)
+      if (faqSchema) schemas.push(faqSchema)
+    }
+
+    return (
+      <>
+        {schemas.length > 0 && (
+          <Script
+            id="event-jsonld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+          />
+        )}
+        <EventSingle event={event} key={event._id} />
+      </>
+    )
   } catch (error) {
     console.error('Error fetching event data:', error)
     return notFound()

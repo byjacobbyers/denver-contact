@@ -11,6 +11,8 @@ import { SiteQuery } from '@/sanity/queries/documents/site-query'
 import Page from "@/components/page-single"
 import { urlFor } from "@/components/sanity-image/url"
 import OrgJsonLd from "@/components/organization-jsonld"
+import Script from 'next/script'
+import { generateWebPageJsonLd, generateFAQJsonLd } from '@/lib/seo'
 
 export const generateMetadata = async (): Promise<Metadata> => {
 	try {
@@ -99,9 +101,37 @@ export default async function Home() {
 			return notFound()
 		}
 
+  // Generate JSON-LD schemas
+  const schemas = []
+
+  // WebPage schema
+  const pageSeo = page?.seo || {}
+  schemas.push(generateWebPageJsonLd({
+    title: page.title,
+    description: pageSeo.metaDesc,
+    url: '/',
+    seo: pageSeo,
+    _updatedAt: page._updatedAt,
+  }))
+
+  // FAQ schema (if page has FAQ blocks)
+  const faqBlocks = page.sections?.filter((section: any) => section._type === 'faqBlock' && section.active) || []
+  const allFaqs = faqBlocks.flatMap((block: any) => block.faqs || [])
+  if (allFaqs.length > 0) {
+    const faqSchema = generateFAQJsonLd(allFaqs)
+    if (faqSchema) schemas.push(faqSchema)
+  }
+
   return (
     <>
 			<OrgJsonLd />
+      {schemas.length > 0 && (
+        <Script
+          id="home-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+        />
+      )}
       <Page page={page} key={page._id} /> 
 		</>
 		)

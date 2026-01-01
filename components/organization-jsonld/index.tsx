@@ -10,55 +10,74 @@ const OrgJsonLd = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await client.fetch(SiteQuery)
-			if (data && data.length > 0) {
-				const siteData = data[0]
-				const jsonLd = {
+			try {
+				const siteData = await client.fetch(SiteQuery)
+				if (!siteData) return
+
+				// Normalize baseUrl to remove trailing slash
+				const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.denvercontactimprov.com').replace(/\/$/, '')
+				const logoUrl = `${baseUrl}${Logo.src}`
+				
+				// Organization schema
+				const organization = {
 					'@context': 'https://schema.org',
 					'@type': 'Organization',
 					name: siteData.title,
-					foundingYear: siteData.foundingYear,
-					image: Logo.src, 
-					url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
-					address: {
-						'@type': 'PostalAddress',
-						addressCountry: siteData.addressCountry,
-						addressLocality: siteData.addressLocality,
-						streetAddress: siteData.address,
-						postalCode: siteData.postalCode,
-						addressRegion: siteData.addressRegion,
+					...(siteData.foundingYear && { foundingDate: siteData.foundingYear }),
+					logo: {
+						'@type': 'ImageObject',
+						url: logoUrl,
 					},
-					sameAs: siteData.sameAs.map((url: string) => url),
-					description: siteData.seo.metaDesc,
-					'@graph': [
-						{
-							'@context': 'https://schema.org',
-							'@type': 'WebPage',
-							name: siteData.title,
-							description: siteData.seo.metaDesc,
-							url: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
-							publisher: {
-								'@type': 'Organization',
-								name: siteData.title,
-								logo: {
-									'@type': 'ImageObject',
-									url: Logo.src
-								}
-							},
+					image: logoUrl,
+					url: baseUrl,
+					...(siteData.address && {
+						address: {
+							'@type': 'PostalAddress',
+							...(siteData.addressCountry && { addressCountry: siteData.addressCountry }),
+							...(siteData.addressLocality && { addressLocality: siteData.addressLocality }),
+							...(siteData.address && { streetAddress: siteData.address }),
+							...(siteData.postalCode && { postalCode: siteData.postalCode }),
+							...(siteData.addressRegion && { addressRegion: siteData.addressRegion }),
 						},
-						{
-							'@context': 'https://schema.org',
-							'@type': 'Person',
-							name: siteData.founder,
-							jobTitle: 'Founder & CEO',
-							sameAs: siteData.social?.linkedin,
-						}
-					]
+					}),
+					...(siteData.sameAs && siteData.sameAs.length > 0 && {
+						sameAs: siteData.sameAs.map((url: string) => url),
+					}),
+					...(siteData.seo?.metaDesc && { description: siteData.seo.metaDesc }),
 				}
 
-				setJsonLdContent(JSON.stringify(jsonLd))
-			} else {
-				console.log('No data received from fetch')
+				// Website schema
+				const website = {
+					'@context': 'https://schema.org',
+					'@type': 'WebSite',
+					name: siteData.title,
+					url: baseUrl,
+					publisher: {
+						'@type': 'Organization',
+						name: siteData.title,
+						logo: {
+							'@type': 'ImageObject',
+							url: logoUrl,
+						},
+					},
+				}
+
+				// Person schema (if founder exists)
+				const person = siteData.founder ? {
+					'@context': 'https://schema.org',
+					'@type': 'Person',
+					name: siteData.founder,
+					...(siteData.social?.linkedin && {
+						sameAs: [siteData.social.linkedin].filter(Boolean),
+					}),
+				} : null
+
+				// Combine all schemas into an array
+				const schemas = [organization, website, person].filter(Boolean)
+
+				setJsonLdContent(JSON.stringify(schemas))
+			} catch (error) {
+				console.error('Error fetching site data for JSON-LD:', error)
 			}
 		}
 
@@ -67,7 +86,7 @@ const OrgJsonLd = () => {
 
 	return jsonLdContent ? (
 		<Script
-			id='app-ld-json'
+			id='organization-ld-json'
 			type='application/ld+json'
 			dangerouslySetInnerHTML={{ __html: jsonLdContent }}
 		/>

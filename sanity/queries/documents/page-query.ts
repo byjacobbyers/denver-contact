@@ -20,6 +20,7 @@ export const pagesSitemapQuery = groq`*[_type == "page" && defined(slug.current)
 // Query for a single page by slug
 export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
   _id,
+  _updatedAt,
   title,
   "slug": slug.current,
   backgroundColor,

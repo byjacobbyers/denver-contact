@@ -48,6 +48,7 @@ export const eventQuery = groq`
   *[_type == "event" && slug.current == $slug][0] {
     _id,
     _type,
+    _updatedAt,
     title,
     slug,
     image {
