@@ -97,6 +97,7 @@ const ImageBlock: React.FC<ImageBlockType> = ({
                 alt={image?.alt || 'Fallback image'}
                 width={2560}
                 height={1440}
+                componentIndex={componentIndex}
                 className="w-full h-full object-cover"
               />
             </div>

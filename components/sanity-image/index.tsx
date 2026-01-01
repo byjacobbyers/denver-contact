@@ -89,6 +89,7 @@ export default function SanityImage({
 
   const priority = componentIndex === 0;
   const loading = componentIndex === 0 ? 'eager' : 'lazy';
+  const fetchPriority = componentIndex === 0 ? 'high' as const : 'auto' as const;
   const widthProp = fill ? undefined : width;
   const heightProp = fill ? undefined : height;
   
@@ -104,6 +105,7 @@ export default function SanityImage({
       fill={fill}
       priority={priority}
       loading={loading}
+      fetchPriority={fetchPriority}
       role={role}
       sizes={sizes}
     />

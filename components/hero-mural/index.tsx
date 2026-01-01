@@ -62,6 +62,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
                 alt={image?.alt || 'Hero mural background'}
                 width={2560}
                 height={1440}
+                componentIndex={componentIndex}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -101,6 +102,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
                 alt={frontImage?.alt || 'Hero mural front image'}
                 width={2560}
                 height={1440}
+                componentIndex={componentIndex}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -130,6 +132,7 @@ const HeroMural: React.FC<HeroMuralType> = ({
                 alt={mobileImage?.alt || 'Hero mural mobile image'}
                 width={mobileImage?.asset.metadata.dimensions.width}
                 height={mobileImage?.asset.metadata.dimensions.height}
+                componentIndex={componentIndex}
                 className="w-full h-full object-cover"
               />
             </div>
