@@ -37,6 +37,12 @@ export const eventsQuery = groq`
   }
 `
 
+// Query for sitemap - includes _updatedAt
+export const eventsSitemapQuery = groq`*[_type == "event" && defined(slug.current)] {
+  "slug": slug.current,
+  _updatedAt
+}`
+
 // Query for a single event by slug
 export const eventQuery = groq`
   *[_type == "event" && slug.current == $slug][0] {

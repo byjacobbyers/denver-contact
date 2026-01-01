@@ -11,6 +11,12 @@ export const pagesQuery = groq`*[_type == "page" && defined(slug.current)] {
   "slug": slug.current
 }`
 
+// Query for sitemap - includes _updatedAt
+export const pagesSitemapQuery = groq`*[_type == "page" && defined(slug.current)] {
+  "slug": slug.current,
+  _updatedAt
+}`
+
 // Query for a single page by slug
 export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0] {
   _id,
