@@ -15,14 +15,14 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
 	const pages = pageSlugs.map((page: { slug: string; _updatedAt: string }) => {
 		if (page.slug === 'home') {
 			return {
-				url: `${URL}/`,
+				url: `${URL}`,
 				lastModified: page._updatedAt,
 				priority: 1,
 				changeFrequency: 'weekly' as const,
 			}
 		} else {
 			return {
-				url: `${URL}/${page.slug}`,
+				url: `${URL}${page.slug}`,
 				lastModified: page._updatedAt,
 				priority: 0.8,
 				changeFrequency: 'monthly' as const,
@@ -31,7 +31,7 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
 	})
 
 	const events = eventSlugs.map((event: { slug: string; _updatedAt: string }) => ({
-		url: `${URL}/events/${event.slug}`,
+		url: `${URL}events/${event.slug}`,
 		lastModified: event._updatedAt,
 		priority: 0.7,
 		changeFrequency: 'weekly' as const,
