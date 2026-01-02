@@ -55,7 +55,7 @@ const EventCarousel = () => {
             return endDate >= now;
           })
           .sort((a: EventType, b: EventType) => 
-            parseSanityDate(b.startDate).getTime() - parseSanityDate(a.startDate).getTime()
+            parseSanityDate(a.startDate).getTime() - parseSanityDate(b.startDate).getTime()
           );
 
         setEvents(upcomingEvents);
