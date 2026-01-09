@@ -95,8 +95,8 @@ const ImageBlock: React.FC<ImageBlockType> = ({
               <SanityImage
                 source={image}
                 alt={image?.alt || 'Fallback image'}
-                width={2560}
-                height={1440}
+                width={image?.asset?.metadata?.dimensions?.width}
+                height={image?.asset?.metadata?.dimensions?.height}
                 componentIndex={componentIndex}
                 className="w-full h-full object-cover"
               />
@@ -106,21 +106,21 @@ const ImageBlock: React.FC<ImageBlockType> = ({
       ) : (
         <div className="container flex flex-col items-center justify-center">
           <motion.div
-            className="w-full aspect-video max-w-4xl"
+            className="w-full max-w-4xl"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: componentIndex !== 0 ? 0.5 : 0, type: 'spring', duration: 1.5 }}
           >
             {image && (
-                          <SanityImage
-              source={image}
-              alt={image?.alt || 'Fallback image'}
-              width={2560}
-              height={1440}
-              componentIndex={componentIndex}
-              className="w-full h-full object-cover"
-            />
+              <SanityImage
+                source={image}
+                alt={image?.alt || 'Fallback image'}
+                width={image?.asset?.metadata?.dimensions?.width}
+                height={image?.asset?.metadata?.dimensions?.height}
+                componentIndex={componentIndex}
+                className="w-full h-full object-cover"
+              />
             )}
           </motion.div>
           {content && (
