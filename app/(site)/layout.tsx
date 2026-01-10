@@ -6,14 +6,17 @@ import Template from "./template"
 import Script from 'next/script';
 import { SanityLive } from "@/sanity/lib/live";
 import { DisableDraftMode } from "@/components/disable-draftmode";
-// VisualEditing is available in @sanity/visual-editing
-// import { VisualEditing } from '@sanity/visual-editing'
+import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { AppProvider } from '@/context/app';
 import RecaptchaManager from '@/components/recaptcha-manager';
 // import { CookieConsentBanner } from '@/components/cookie-consent';
+
+// Time-based ISR for all routes under (site)
+// You can adjust this value (in seconds) if you want faster or slower refreshes
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: "Denver Contact Improv",
@@ -50,11 +53,11 @@ export default async function RootLayout({
           <Header />
           <Template>
             {children}
+            <SanityLive />
             {(await draftMode()).isEnabled && (
               <>
-                <SanityLive />
                 <DisableDraftMode />
-                {/* <VisualEditing /> */}
+                <VisualEditing />
               </>
             )}
             <Script
